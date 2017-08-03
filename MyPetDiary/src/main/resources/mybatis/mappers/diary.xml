@@ -1,7 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- Diary 테이블 mapper 파일 -->
 <mapper namespace="diary">
+
+	<!-- // 1. 모아보기(테이블에 있는 데이터를 아이디 기준으로 가져와서 보여주기, 글 번호 내림차순) -->
+	<!-- public List<DiaryVO> selectAllDiary(String id); -->
+	<select id="selectAllDiary" resultType="com.diary.mypet.domain.DiaryVO"
+		parameterType="String">
+		select * from diary
+		where id=#{id}
+		order by no desc
+	</select>
+
+	<!-- // 2. 상세보기(특정 아이디 & 선택한 글번호를 기준으로 데이터를 가져와서 보여주기) -->
+	<!-- public DiaryVO selectOneDiary(DiaryVO vo); -->
+	<select id="selectOneDiary" resultType="DiaryVO" parameterType="DiaryVO">
+		select * from diary where id=#{id} and no=#{no}
+	</select>
+
+	<!-- // 2-1) 상세보기 시 조회수 1 증가 -->
+	<!-- public int updateCount(DiaryVO vo); -->
+	<update id="updateCount" parameterType="DiaryVO">
+		update diary set
+		readcnt=readcnt+1
+		where where id=#{id} and no=#{no}
+	</update>
+
+
+	<!-- // 3. 일기 작성(글번호(자동), 제목, 내용, 이미지, 아이디(로그인하면 자동으로 등록) 입력 받아서 테이블에 저장 -->
+	<!-- public int insertDiary(DiaryVO vo); -->
+	<insert id="insertDiary" parameterType="DiaryVO">
+		insert into
+		diary(no,title,content,id)
+		values(NOSEQ.NEXTVAL,#{title},#{content},#{id})
+	</insert>
+
+	<!-- // 4. 일기 수정(제목, 내용, 이미지) 입력 받아서 테이블에 저장 -->
+	<!-- public int updateDiary(DiaryVO vo); -->
+	<update id="updateDiary" parameterType="DiaryVO">
+		update diary set
+		title=#{title},content=#{content},image=#{image}
+		where id=#{id} and
+		no=#{no}
+	</update>
+
+
+	<!-- // 5. 일기 삭제(글 번호, 아이디 기준으로 삭제) -->
+	<!-- public int deleteDiary(DiaryVO vo); -->
+	<delete id="deleteDiary" parameterType="DiaryVO">
+		delete diary
+		where
+		id=#{id} and no=#{no}
+	</delete>
 
 </mapper>

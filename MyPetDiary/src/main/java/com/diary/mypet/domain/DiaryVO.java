@@ -10,11 +10,12 @@ public class DiaryVO {
 	private int no;
 	private String title;
 	private String content;
-	private String nickname;
+	private String image;
 	private int readcnt;
 	private Date regdate;
+	private String id;
 
-	// 2. Getter, Setter 메소드 생성
+	// 2. Get, Set
 	public int getNo() {
 		return no;
 	}
@@ -39,12 +40,12 @@ public class DiaryVO {
 		this.content = content;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getImage() {
+		return image;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public int getReadcnt() {
@@ -63,11 +64,19 @@ public class DiaryVO {
 		this.regdate = regdate;
 	}
 
-	// 3. toString() 재정의 -> 코드 테스트를 위해
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	// 3.toString() -> 디버깅용
 	@Override
 	public String toString() {
-		return "DiaryVO [no=" + no + ", title=" + title + ", content=" + content + ", nickname=" + nickname
-				+ ", readcnt=" + readcnt + ", regdate=" + regdate + "]";
+		return "DiaryVO [no=" + no + ", title=" + title + ", content=" + content + ", image=" + image + ", readcnt="
+				+ readcnt + ", regdate=" + regdate + ", id=" + id + "]";
 	}
 
 }

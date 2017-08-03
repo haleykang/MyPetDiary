@@ -5,7 +5,6 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-	<!-- mapper 파일에서 DTO 클래스의 패키지 이름 생략을 위해, 패키지 이름 등록 -->
 	<typeAliases>
 		<package name="com.diary.mypet.domain" />
 	</typeAliases>

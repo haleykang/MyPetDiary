@@ -1,35 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>My Pet Diary</title>
-</head>
-<body>
-	<%@include file="include/header.jsp"%>
-
-	<div class="jumbotron">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-1">
-				<h1>
-					<em>My Pet Diary</em>
-				</h1>
 
 
-				<p class="text-muted">
-					<small>당신의 반려동물과 어떤 하루를 보냈나요? <br />소중한 일상을 공유해보세요.
-					</small>
-				</p>
+<%@include file="include/header.jsp"%>
 
-				<br />
-				<p>
-					<a class="btn btn-info btn-lg" href="#">시작하기</a>
-				</p>
-			</div>
+
+<div class="jumbotron"
+	style="background-image: url('/mypet/resources/theme/img/about-bg.jpg')">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-1">
+			<h1 style="color: white">My Pet Diary</h1>
+
+			<p style="color: white">
+				오늘 당신과 당신의 반려동물은 어떤 하루를 보냈나요?<br />소중한 하루를 기록하고 공유하세요.
+			</p>
+			<p>
+				<a class="btn btn-primary btn-lg" href="diary/list">시작하기<span
+					class="glyphicon glyphicon-arrow-right"></span></a>
+			</p>
 		</div>
 	</div>
+</div>
 
-	<%@include file="include/footer.jsp"%>
-</body>
-</html>
+
+<%@include file="include/footer.jsp"%>
+

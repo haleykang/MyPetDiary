@@ -15,18 +15,27 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="/mypet/resources/bootstrap/js/bootstrap.min.js"></script>
 
+<body>
+	<br />
+	<br />
+	<br />
+	<br />
+	<hr>
+	<footer class="main-footer">
 
-<footer class="main-footer">
-
-	<div class="well">
-		<div class="pull-right hidden-xs">
-			<b>Version</b> 1.0
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-6 col-lg-offset-3 col-md-10 col-md-offset-1">
+					<p>
+						<strong>Copyright &copy; 2017 <a href="/mypet">My Pet
+								Diary</a>.
+						</strong> All rights reserved.
+					</p>
+				</div>
+			</div>
 		</div>
-		<strong>Copyright &copy; 2017 <a href="#">My Pet Diary</a>.
-		</strong> All rights reserved.
-	</div>
 
-</footer>
+	</footer>
 
 
 </body>
