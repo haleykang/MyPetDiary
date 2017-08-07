@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateCount" parameterType="DiaryVO">
 		update diary set
 		readcnt=readcnt+1
-		where where id=#{id} and no=#{no}
+		where no = #{no} and id =#{id}
 	</update>
 
 
@@ -34,8 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- public int insertDiary(DiaryVO vo); -->
 	<insert id="insertDiary" parameterType="DiaryVO">
 		insert into
-		diary(no,title,content,id)
-		values(NOSEQ.NEXTVAL,#{title},#{content},#{id})
+		diary(no,title,content,image,id)
+		values(NOSEQ.NEXTVAL,#{title},#{content},#{image},#{id})
 	</insert>
 
 	<!-- // 4. 일기 수정(제목, 내용, 이미지) 입력 받아서 테이블에 저장 -->

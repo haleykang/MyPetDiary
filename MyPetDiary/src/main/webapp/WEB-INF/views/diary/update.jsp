@@ -40,11 +40,9 @@
 					reader.onload = function(e) {
 						$('#image').attr('src', e.target.result);
 						$('#helpmsg').html(''); // 이미지 등록 시 헬프메세지 없애기
-
 					}
 					// 선택한 파일을 읽기
 					reader.readAsDataURL(input.files[0]);
-
 				} else {
 					// 확장자가 이미지가 아님 
 					alert("이미지 파일만 등록 가능합니다.(확장자 - jpg, gif, png )");
@@ -63,7 +61,7 @@
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 				<div class="page-header">
-					<h3 id="forms">일기 작성</h3>
+					<h3 id="forms">일기 수정</h3>
 				</div>
 			</div>
 		</div>
@@ -74,18 +72,21 @@
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
 				<form method="post" enctype="multipart/form-data">
+					<!-- 수정 처리를 위해 no & id 값 hidden 태그로 넘기기 -->
+					<input type="hidden" name="no" value="${detail.no}" /> <input
+						type="hidden" name="id" value="${detail.id}" />
+
 					<div class="box-body">
 						<!-- name의 값은 테이블 이름과 일치 시키기 -->
 						<label class="control-label"><strong>제목</strong></label> <input
 							type="text" name="title" class="form-control"
-							placeholder="오늘 하루는 어떤 하루였나요?" required />
+							value="${detail.title}" required />
 					</div>
 					<br />
 
 					<div class="form-group">
 						<label class="control-label"><strong>내용</strong></label>
-						<textarea class="form-control" name="content" rows="10"
-							placeholder="반려동물과 함께한 당신의 하루를 기록하세요." required></textarea>
+						<textarea class="form-control" name="content" rows="10" required>${detail.content}</textarea>
 
 					</div>
 					<br />
@@ -93,12 +94,25 @@
 					<!-- 사용자가 파일을 선택하면 그 파일의 섬네일을 보여주기 -->
 					<div class="form-group">
 						<div class="text-right">
-							<div class="well" style="background: white; border: 1px;">
-								<br /> <img class="img-responsive center-block" id="image" />
-								<br /> <span id="helpmsg" class="help-block"
-									style="text-align: center;">일기와 함께 보관할 사진을 넣어주세요. 사진을
-									추가하지 않을 경우 기본 이미지가 저장됩니다.</span>
-							</div>
+
+							<c:if test="${detail.image == null}">
+								<div class="well" style="background: white; border: 1px;">
+									<br /> <img class="img-responsive center-block" id="image" />
+									<br /> <span id="helpmsg" class="help-block"
+										style="text-align: center;">일기와 함께 보관할 사진을 넣어주세요. 사진을
+										추가하지 않을 경우 기본 이미지가 저장됩니다.</span>
+
+								</div>
+							</c:if>
+							<c:if test="${detail.image != null}">
+								<div class="well" style="background: white; border: 1px;">
+									<br /> <img class="img-responsive center-block" id="image"
+										src="../diaryimage/${detail.image}" /> <br />
+
+								</div>
+							</c:if>
+
+
 							<label class="btn btn-default btn-file"> 사진 선택 <input
 								type="file" id="imgInp" name="image" style="display: none;">
 							</label>
@@ -110,8 +124,7 @@
 					<div class="box-footer">
 						<hr>
 						<div class="text-center">
-							<button type="submit" class="btn btn-success">작성완료</button>
-							<button type="reset" class="btn btn-warning">작성취소</button>
+							<button type="submit" class="btn btn-success">수정완료</button>
 						</div>
 					</div>
 				</form>

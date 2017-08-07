@@ -15,6 +15,16 @@ public class DiaryVO {
 	private Date regdate;
 	private String id;
 
+	public DiaryVO() {
+
+	}
+
+	// id, no 받는 생성자
+	public DiaryVO(int no, String id) {
+		this.no = no;
+		this.id = id;
+	}
+
 	// 2. Get, Set
 	public int getNo() {
 		return no;

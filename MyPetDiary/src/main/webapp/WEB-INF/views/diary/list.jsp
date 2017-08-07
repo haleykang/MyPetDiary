@@ -10,70 +10,54 @@
 </head>
 <body>
 	<%@include file="../include/header.jsp"%>
-	<!-- 목록 보기 페이지  -->
-
-	<!-- 타이틀 -->
-	<!-- 타이틀 -->
-
-	<div class="row">
-		<div class="col-lg-6  col-lg-offset-3">
-			<div class="page-header">
-				<h3 id="forms">Diary</h3>
-			</div>
+	<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+		<div align="left">
+			<h3>일기 목록</h3>
 		</div>
+		<div align="right">
+			<p>
+				<a href="write" class="btn btn-link"><span
+					class="glyphicon glyphicon-pencil"></span>일기 작성</a>
+			</p>
+		</div>
+		<hr>
+
 	</div>
 
-
-
+	<!-- Main Content -->
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<div class="post-preview">
-					<a href="post.html">
-						<h2 class="post-title">Man must explore, and this is
-							exploration at its greatest</h2>
-						<h3 class="post-subtitle">Problems look mighty small from 150
-							miles up</h3>
-					</a>
-					<p class="post-meta">
-						Posted by <a href="#">Start Bootstrap</a> on September 24, 2014
-					</p>
-				</div>
-				<hr>
-				<div class="post-preview">
-					<a href="post.html">
-						<h2 class="post-title">I believe every human has a finite
-							number of heartbeats. I don't intend to waste any of mine.</h2>
-					</a>
-					<p class="post-meta">
-						Posted by <a href="#">Start Bootstrap</a> on September 18, 2014
-					</p>
-				</div>
-				<hr>
-				<div class="post-preview">
-					<a href="post.html">
-						<h2 class="post-title">Science has not yet mastered prophecy
-						</h2>
-						<h3 class="post-subtitle">We predict too much for the next
-							year and yet far too little for the next ten.</h3>
-					</a>
-					<p class="post-meta">
-						Posted by <a href="#">Start Bootstrap</a> on August 24, 2014
-					</p>
-				</div>
-				<hr>
-				<div class="post-preview">
-					<a href="post.html">
-						<h2 class="post-title">Failure is not an option</h2>
-						<h3 class="post-subtitle">Many say exploration is part of our
-							destiny, but it’s actually our duty to future generations.</h3>
-					</a>
-					<p class="post-meta">
-						Posted by <a href="#">Start Bootstrap</a> on July 8, 2014
-					</p>
-				</div>
-				<hr>
+				<!-- 반복문 시작 -->
+				<c:forEach items="${list}" var="list">
+					<div class="row">
+						<!-- 이미지가 있을 때만 보여주기 -->
+						<!-- 안이쁘니까 디폴트 이미지를 추가할까? -->
+						<c:if test="${list.image != null}">
+							<div class="col-xs-6 col-md-3">
+								<a href="detail?no=${list.no}&id=${list.id}" class="thumbnail">
+									<img src="../diaryimage/${list.image}">
+								</a>
+							</div>
+						</c:if>
+						<div>
+							<a href="detail?no=${list.no}&id=${list.id}">
+								<h3>
+									<strong>${list.title}</strong>
+								</h3>
+							</a>
+							<p>
+								Posted by <span class="text-primary">${list.id}</span>&nbsp;&nbsp;작성일
+								${list.regdate}
+							</p>
+
+						</div>
+					</div>
+					<hr>
+				</c:forEach>
+				<!-- 반복문 끝 -->
+
 				<!-- Pager -->
 				<ul class="pager">
 					<li class="next"><a href="#">Older Posts &rarr;</a></li>
@@ -81,10 +65,6 @@
 			</div>
 		</div>
 	</div>
-
-
-	<!-- 글 쓰기 버튼 -->
-
 
 	<%@include file="../include/footer.jsp"%>
 </body>
