@@ -39,6 +39,34 @@
 	<default-servlet-handler />
 
 
+	<!-- 인터셉터 객체 생성 -->
+	<beans:bean class="com.diary.mypet.interceptor.LoginInterceptor"
+		id="loginInterceptor">
+	</beans:bean>
+
+	<beans:bean class="com.diary.mypet.interceptor.AuthInterceptor"
+		id="authInterceptor">
+	</beans:bean>
+
+	<!-- 인터셉터 경로 설정 -->
+	<interceptors>
+		<!-- /user/login/ 요청이 왔을 때 LoginInterceptor가 동작하도록 설정 -->
+		<interceptor>
+			<mapping path="/user/loginPost" />
+			<beans:ref bean="loginInterceptor" />
+		</interceptor>
+
+		<!-- /diary/list 요청 오면 -->
+		<interceptor>
+			<mapping path="/diary/list" />
+			<mapping path="/diary/detail" />
+			<mapping path="/diary/write" />
+			<mapping path="/diary/update" />
+			<mapping path="/diary/delete" />
+			<beans:ref bean="authInterceptor" />
+		</interceptor>
+
+	</interceptors>
 
 
 </beans:beans>

@@ -61,7 +61,7 @@
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 				<div class="page-header">
-					<h3 id="forms">일기 수정</h3>
+					<h4 id="forms">일기 수정</h4>
 				</div>
 			</div>
 		</div>

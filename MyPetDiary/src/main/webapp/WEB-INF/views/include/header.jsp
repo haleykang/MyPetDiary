@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- session 설정 true 로 변경 -->
+<%@ page session="true"%>
+
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -33,9 +37,16 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/mypet">Home</a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Login</a></li>
-				</ul>
+				<c:if test="${login == null}">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/mypet/user/login">Login</a></li>
+					</ul>
+				</c:if>
+				<c:if test="${login != null}">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/mypet/user/logout">Logout</a></li>
+					</ul>
+				</c:if>
 			</div>
 		</div>
 	</nav>

@@ -12,7 +12,7 @@
 	<%@include file="../include/header.jsp"%>
 	<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 		<div align="left">
-			<h3>일기 목록</h3>
+			<h4>일기 목록</h4>
 		</div>
 		<div align="right">
 			<p>
@@ -25,46 +25,50 @@
 	</div>
 
 	<!-- Main Content -->
+
 	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<!-- 반복문 시작 -->
-				<c:forEach items="${list}" var="list">
-					<div class="row">
-						<!-- 이미지가 있을 때만 보여주기 -->
-						<!-- 안이쁘니까 디폴트 이미지를 추가할까? -->
-						<c:if test="${list.image != null}">
-							<div class="col-xs-6 col-md-3">
-								<a href="detail?no=${list.no}&id=${list.id}" class="thumbnail">
-									<img src="../diaryimage/${list.image}">
-								</a>
-							</div>
-						</c:if>
-						<div>
-							<a href="detail?no=${list.no}&id=${list.id}">
-								<h3>
-									<strong>${list.title}</strong>
-								</h3>
+			<!-- 반복문 시작 -->
+			<c:forEach items="${list}" var="list">
+
+				<div class="media">
+					<c:if test="${list.image == null}">
+						<div class="media-left">
+							<a href="detail?no=${list.no}&id=${list.id}"> <img
+								class="media-object" src="">
 							</a>
-							<p>
-								Posted by <span class="text-primary">${list.id}</span>&nbsp;&nbsp;작성일
-								${list.regdate}
-							</p>
-
 						</div>
-					</div>
-					<hr>
-				</c:forEach>
-				<!-- 반복문 끝 -->
 
-				<!-- Pager -->
-				<ul class="pager">
-					<li class="next"><a href="#">Older Posts &rarr;</a></li>
-				</ul>
-			</div>
+					</c:if>
+					<c:if test="${list.image != null}">
+
+						<div class="col-xs-6 col-md-3">
+							<a href="detail?no=${list.no}&id=${list.id}" class="thumbnail">
+								<img src="../diaryimage/${list.image}">
+							</a>
+						</div>
+					</c:if>
+					<div class="media-body">
+						<a href="detail?no=${list.no}&id=${list.id}">
+							<h4 class="media-heading">${list.title}</h4>
+						</a> Posted by <span class="text-primary">${list.id}</span>&nbsp;&nbsp;작성일
+						${list.regdate}
+					</div>
+				</div>
+				<hr>
+			</c:forEach>
+
+			<!-- 반복문 종료 -->
+
+
+			<!-- Pager -->
+			<ul class="pager">
+				<li class="next"><a href="#">Older Posts &rarr;</a></li>
+			</ul>
 		</div>
 	</div>
+
 
 	<%@include file="../include/footer.jsp"%>
 </body>

@@ -48,4 +48,10 @@
 	</filter-mapping>
 
 
+	<!-- 세션 초기화 설정 -->
+	<session-config>
+		<!-- 10분 동안 조작하지 않으면 세션 초기화 -->
+		<session-timeout>10</session-timeout>
+	</session-config>
+
 </web-app>
