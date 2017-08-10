@@ -1,10 +1,12 @@
 package com.diary.mypet.service;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.diary.mypet.dao.DiaryDao;
+import com.diary.mypet.domain.DUserVO;
 
-// DiaryService ¸Ş¼Òµå ½ÇÁ¦ ±¸Çö Å¬·¡½º
+// DiaryService ë©”ì†Œë“œ ì‹¤ì œ êµ¬í˜„ í´ë˜ìŠ¤
 
 import com.diary.mypet.domain.DiaryVO;
 
@@ -23,54 +26,84 @@ public class DiaryServiceImpl implements DiaryService {
 	@Autowired
 	private DiaryDao dao;
 
-	// ¸ğ¾Æº¸±â ¸Ş¼Òµå - id¸¦ ±âÁØÀ¸·Î Å×ÀÌºí¿¡ ÀÖ´Â µ¥ÀÌÅÍ¸¦ °¡Á®¿È
+	// ëª¨ì•„ë³´ê¸° ë©”ì†Œë“œ - idë¥¼ ê¸°ì¤€ìœ¼ë¡œ í…Œì´ë¸”ì— ìˆëŠ” ë°ì´í„°ë¥¼ ê°€ì ¸ì˜´
 	@Override
 	public List<DiaryVO> selectAllDiary(String id) {
 
 		return dao.selectAllDiary(id);
 	}
 
-	// »ó¼¼º¸±â ¸Ş¼Òµå - id¿Í ±Û ¹øÈ£¸¦ ±âÁØÀ¸·Î Å×ÀÌºíÀÇ µ¥ÀÌÅÍ¸¦ °¡Á®¿È
-	// ±×¸®°í Á¶È¸¼ö 1 Áõ°¡
+	// ìƒì„¸ë³´ê¸° ë©”ì†Œë“œ - idì™€ ê¸€ ë²ˆí˜¸ë¥¼ ê¸°ì¤€ìœ¼ë¡œ í…Œì´ë¸”ì˜ ë°ì´í„°ë¥¼ ê°€ì ¸ì˜´
+	// ê·¸ë¦¬ê³  ì¡°íšŒìˆ˜ 1 ì¦ê°€
 	@Override
 	public DiaryVO selectOneDiary(DiaryVO vo) {
-		// 1) Á¶È¸¼ö 1 Áõ°¡
+		// 1) ì¡°íšŒìˆ˜ 1 ì¦ê°€
 		dao.updateCount(vo);
 
-		// 2) ±Û ¹øÈ£ & ¾ÆÀÌµğ¿¡ µû¸¥ µ¥ÀÌÅÍ ¸®ÅÏ
+		// 2) ê¸€ ë²ˆí˜¸ & ì•„ì´ë””ì— ë”°ë¥¸ ë°ì´í„° ë¦¬í„´
 		return dao.selectOneDiary(vo);
 	}
 
-	// ´ÙÀÌ¾î¸® ÀÛ¼ºÇÏ´Â ¸Ş¼Òµå
+	// ë‹¤ì´ì–´ë¦¬ ì‘ì„±í•˜ëŠ” ë©”ì†Œë“œ
 	@Override
 	public int insertDiary(MultipartHttpServletRequest request) {
 
-		// 1) ÀÏ±â ÀÛ¼º Æû¿¡¼­ °ª °¡Á®¿À±â
-		// ¾ÆÀÌµğ´Â ÀÏ´Ü µğÆúÆ® °ª
-		String id = "root";
+		// 1) ì¼ê¸° ì‘ì„± í¼ì—ì„œ ê°’ ê°€ì ¸ì˜¤ê¸°
+		// ì•„ì´ë””ëŠ” ì„¸ì…˜ì—ì„œ ê°€ì ¸
+		HttpSession session = request.getSession();
+		DUserVO userVO = (DUserVO) session.getAttribute("login");
+		String id = userVO.getId();
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 
-		// 2) Dao ¸Ş¼Òµå¿¡¼­ »ç¿ëÇÒ ¸Å°³º¯¼ö »ı¼º
+		// 1-2) ì²´í¬ ë°•ìŠ¤ ì¶”ê°€ ëœ ê°’ ê°€ì ¸ì˜¤ê¸°
+		String[] ckshare= request.getParameterValues("ckshare");
+		System.out.println(ckshare);
+
+		// 2) Dao ë©”ì†Œë“œì—ì„œ ì‚¬ìš©í•  ë§¤ê°œë³€ìˆ˜ ìƒì„±
 		DiaryVO vo = new DiaryVO();
 		vo.setId(id);
 		vo.setTitle(title);
 		vo.setContent(content);
 
-		// 3) ÀÌ¹ÌÁö ÆÄÀÏ °¡Á®¿À±â
-		// (1) Æû¿¡¼­ ÆÄÀÏ °¡Á®¿À±â
+		// 3) ì´ë¯¸ì§€ íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
+		// (1) í¼ì—ì„œ íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
 		MultipartFile image = request.getFile("image");
-		// (2) ÆÄÀÏ ÀúÀåÇÒ µğ·ºÅä¸®ÀÇ Àı´ë°æ·Î °¡Á®¿À±â -> servlet ¹öÀüÀÌ 2.5 ÀÌ»ó ÀÌ¾î¾ß ÇÔ
+		// (2) íŒŒì¼ ì €ì¥í•  ë””ë ‰í† ë¦¬ì˜ ì ˆëŒ€ê²½ë¡œ ê°€ì ¸ì˜¤ê¸° -> servlet ë²„ì „ì´ 2.5 ì´ìƒ ì´ì–´ì•¼ í•¨
 		String uploadPath = request.getServletContext().getRealPath("/diaryimage");
-		// (3) Áßº¹µÇÁö ¾Ê´Â ¹®ÀÚ¿­ »ı¼º
+		// (3) ì¤‘ë³µë˜ì§€ ì•ŠëŠ” ë¬¸ìì—´ ìƒì„±
 		UUID uid = UUID.randomUUID();
 		String filename = image.getOriginalFilename();
+		// ì¸ì½”ë”© ì•ˆë˜ë‹ˆê¹Œ ê°€ì ¸ì˜¨ íŒŒì¼ì´ë¦„ì˜ ë’¤ 3ê¸€ì ê°€ì ¸ì™€ì„œ íŒŒì¼ ì´ë¦„ì— ë¶™ì´ì
+		System.out.println("Original filename : " + filename);
+		String ext = filename.substring(filename.length() - 3, filename.length());
+		System.out.println("í™•ì¥ì : " + ext);
 
-		if (filename != null) {
-			filename = uid + filename;
-			// ÀúÀåµÈ ÆÄÀÏ °æ·Î »ı¼º
-			String filepath = uploadPath + "\\" + filename;
-			// ÆÄÀÏ ¾÷·Îµå
+		// System.out.println("filename = " + filename);
+		// String filename = null;
+		//
+		// try {
+		//
+		// filename = URLEncoder.encode(image.getOriginalFilename(), "utf-8");
+		// System.out.println("filename = " + filename);
+		// } catch (UnsupportedEncodingException e) {
+		//
+		// e.printStackTrace();
+		// // TODO: handle exception
+		// }
+
+		if (filename == null || filename.equals("")) {
+			// ì‚¬ìš©ìê°€ ì„ íƒí•œ íŒŒì¼ì´ ì—†ì„ ê²½ìš° nullë¡œ í‘œì‹œ ë˜ëŠ” ë””í´íŠ¸ ì´ë¯¸ì§€ ë“±ë¡
+			vo.setImage("default_image.jpg");
+
+		} else {
+
+			filename = id + uid + "." + ext;
+			// ì €ì¥ëœ íŒŒì¼ ê²½ë¡œ ìƒì„±
+			String filepath = uploadPath + "/" + filename;
+			System.out.println("filename : " + filename);
+			System.out.println("filepath : " + filepath);
+			// íŒŒì¼ ì—…ë¡œë“œ
 			File file = new File(filepath);
 			try {
 				image.transferTo(file);
@@ -78,78 +111,140 @@ public class DiaryServiceImpl implements DiaryService {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			// Å×ÀÌºí¿¡ ÆÄÀÏ ÀÌ¸§ ÀúÀå
+			// í…Œì´ë¸”ì— íŒŒì¼ ì´ë¦„ ì €ì¥
 			vo.setImage(filename);
-
-		} else {
-
-			// »ç¿ëÀÚ°¡ ¼±ÅÃÇÑ ÆÄÀÏÀÌ ¾øÀ» °æ¿ì null·Î Ç¥½Ã ¶Ç´Â µğÆúÆ® ÀÌ¹ÌÁö µî·Ï
-			vo.setImage("");
-
 		}
-		// 4) Dao ¸Ş¼Òµå È£Ãâ
+
+		// *** ì¤‘ìš”í•œ ìˆ˜ì •ì‚¬í•­ ***
+		// filename.equals("") ë¡œë„ í•´ì•¼í•¨
+
+		// if (filename != null) {
+		// // ëœë¤ ë¬¸ìì—´ & íŒŒì¼ ì´ë¦„ í•©ì¹˜ê¸°
+		// filename = id + uid;
+		// // ì €ì¥í•  íŒŒì¼ ê²½ë¡œ ì„¤ì •
+		// String filepath = uploadPath + "/" + filename;
+		//
+		// // íŒŒì¼ ê²½ë¡œ ìƒì„±
+		// File file = new File(filepath);
+		// try {
+		// // ì´ë¯¸ì§€ íŒŒì¼ì„ ì—…ë¡œë“œ
+		// image.transferTo(file);
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// // í…Œì´ë¸”ì— íŒŒì¼ ì´ë¦„ ì €ì¥
+		// vo.setImage(filename);
+		//
+		// } else {
+		// // ì˜¤ë¦¬ì§€ë„ íŒŒì¼ ì´ë¦„ì´ nullì´ë©´ -> iimmgg íƒœê·¸ì— ìˆëŠ” ê°’ì„ ê°€ì ¸ì™€ì„œ ì €ì¥ - ê¸°ì¡´ ì‚¬ì§„ ê·¸ëŒ€ë¡œ í ..
+		// vo.setImage("default_image.jpg");
+		// }
+
+		// 4) Dao ë©”ì†Œë“œ í˜¸ì¶œ
 		return dao.insertDiary(vo);
 	}
 
-	// ¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿ - id¿Í ±Û ¹øÈ£ ¹Ş¾Æ¼­ µ¥ÀÌÅÍ Àü´Ş
+	// ìˆ˜ì • í˜ì´ì§€ë¡œ ì´ë™ - idì™€ ê¸€ ë²ˆí˜¸ ë°›ì•„ì„œ ë°ì´í„° ì „ë‹¬
 	@Override
 	public DiaryVO goUpdate(DiaryVO vo) {
-		// selectOneDiary Àç»ç¿ë
+		// selectOneDiary ì¬ì‚¬ìš©
 		return dao.selectOneDiary(vo);
 	}
 
-	// ±Û ¼öÁ¤ -> ±Û ÀÔ·Â°ú ¶È°°À½
+	// ê¸€ ìˆ˜ì • -> ê¸€ ì…ë ¥ê³¼ ë˜‘ê°™ìŒ
 	@Override
 	public int updateDiary(MultipartHttpServletRequest request) {
-		// 1) ÀÏ±â ÀÛ¼º Æû¿¡¼­ °ª °¡Á®¿À±â
+		// 1) ì¼ê¸° ì‘ì„± í¼ì—ì„œ ê°’ ê°€ì ¸ì˜¤ê¸°
 		String id = request.getParameter("id");
 		int no = Integer.parseInt(request.getParameter("no"));
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 
-		// 2) Dao ¸Ş¼Òµå¿¡¼­ »ç¿ëÇÏ±â À§ÇØ VO °¡Á®¿Í¼­ °ª ÀúÀå
+		// 1-2) ê³µìœ  ì²´í¬ ë°•ìŠ¤ ì¶”ê°€ëœ ê°’ ê°€ì ¸ì˜¤ê¸°
+		String share = request.getParameter("share");
+		System.out.println(share);
+
+		// 2) Dao ë©”ì†Œë“œì—ì„œ ì‚¬ìš©í•˜ê¸° ìœ„í•´ VO ê°€ì ¸ì™€ì„œ ê°’ ì €ì¥
 		DiaryVO vo = new DiaryVO();
 		vo.setNo(no);
 		vo.setTitle(title);
 		vo.setContent(content);
 		vo.setId(id);
 
-		// 3) ÀÌ¹ÌÁö ÆÄÀÏ °¡Á®¿À±â
-		// Æû¿¡¼­ ÀÌ¹ÌÁö ÆÄÀÏ °¡Á®¿È
-		MultipartFile image = request.getFile("image");
-		// µî·ÏÇÑ ÆÄÀÏ ÀúÀåÇÒ µğ·ºÅä¸®ÀÇ Àı´ë °æ·Î °¡Á®¿À±â
-		String uploadPath = request.getServletContext().getRealPath("/diaryimage");
-		// À¯ÀÏ¹«ÀÌÇÑ ¹®ÀÚ¿­ »ı¼º
-		UUID uid = UUID.randomUUID();
-		// µî·ÏµÈ ÆÄÀÏ ÀÌ¸§ °¡Á®¿À±â
-		String filename = image.getOriginalFilename();
+		// 3) ì´ë¯¸ì§€ íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
+		// String test = request.getParameter("iimmgg");
+		// System.out.println(test);
 
-		if (filename != null) {
-			// ·£´ı ¹®ÀÚ¿­ & ÆÄÀÏ ÀÌ¸§ ÇÕÄ¡±â
-			filename = uid + filename;
-			// ÀúÀåÇÒ ÆÄÀÏ °æ·Î ¼³Á¤
-			String filepath = uploadPath + "\\" + filename;
-			// ÆÄÀÏ °æ·Î »ı¼º
+		// í¼ì—ì„œ ì´ë¯¸ì§€ íŒŒì¼ ê°€ì ¸ì˜´
+		MultipartFile image = request.getFile("image");
+		// ë“±ë¡í•œ íŒŒì¼ ì €ì¥í•  ë””ë ‰í† ë¦¬ì˜ ì ˆëŒ€ ê²½ë¡œ ê°€ì ¸ì˜¤ê¸°
+		String uploadPath = request.getServletContext().getRealPath("/diaryimage");
+		// ìœ ì¼ë¬´ì´í•œ ë¬¸ìì—´ ìƒì„±
+		UUID uid = UUID.randomUUID();
+		// ë“±ë¡ëœ íŒŒì¼ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
+
+		String filename = image.getOriginalFilename();
+		System.out.println("Original filename : " + filename);
+		String ext = filename.substring(filename.length() - 3, filename.length());
+		System.out.println("í™•ì¥ì : " + ext);
+		// String filename = image.getOriginalFilename();
+		// System.out.println("ì˜¤ë¦¬ì§€ë„ íŒŒì¼ ì´ë¦„ : " + filename);
+
+		if (filename == null || filename.equals("")) {
+
+			String iimmgg = request.getParameter("iimmgg");
+			System.out.println("iimmgg : " + iimmgg);
+			vo.setImage(iimmgg);
+
+		} else {
+
+			filename = id + uid + "." + ext;
+			// ì €ì¥ëœ íŒŒì¼ ê²½ë¡œ ìƒì„±
+			String filepath = uploadPath + "/" + filename;
+			System.out.println("filepath : " + filepath);
+			System.out.println("filename : " + filename);
+			// íŒŒì¼ ì—…ë¡œë“œ
 			File file = new File(filepath);
 			try {
-				// ÀÌ¹ÌÁö ÆÄÀÏÀ» ¾÷·Îµå
 				image.transferTo(file);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			// Å×ÀÌºí¿¡ ÆÄÀÏ ÀÌ¸§ ÀúÀå
+			// í…Œì´ë¸”ì— íŒŒì¼ ì´ë¦„ ì €ì¥
 			vo.setImage(filename);
 
-		} else {
-			vo.setImage("");
 		}
 
-		// 4) Dao È£Ãâ
+		// if (filename != null) {
+		// // ëœë¤ ë¬¸ìì—´ & íŒŒì¼ ì´ë¦„ í•©ì¹˜ê¸°
+		// filename = id + uid;
+		// // ì €ì¥í•  íŒŒì¼ ê²½ë¡œ ì„¤ì •
+		// String filepath = uploadPath + "/" + filename;
+		//
+		// // íŒŒì¼ ê²½ë¡œ ìƒì„±
+		// File file = new File(filepath);
+		// try {
+		// // ì´ë¯¸ì§€ íŒŒì¼ì„ ì—…ë¡œë“œ
+		// image.transferTo(file);
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// // í…Œì´ë¸”ì— íŒŒì¼ ì´ë¦„ ì €ì¥
+		// vo.setImage(filename);
+		//
+		// } else {
+		// // ì˜¤ë¦¬ì§€ë„ íŒŒì¼ ì´ë¦„ì´ nullì´ë©´ -> iimmgg íƒœê·¸ì— ìˆëŠ” ê°’ì„ ê°€ì ¸ì™€ì„œ ì €ì¥ - ê¸°ì¡´ ì‚¬ì§„ ê·¸ëŒ€ë¡œ í ..
+		// vo.setImage("default_image.jpg");
+		// }
+
+		// 4) Dao í˜¸ì¶œ
 		return dao.updateDiary(vo);
 	}
 
-	// ±Û ¹øÈ£ ¾ÆÀÌµğ°¡ ¸Â´Â µ¥ÀÌÅÍ »èÁ¦
+	// ê¸€ ë²ˆí˜¸ ì•„ì´ë””ê°€ ë§ëŠ” ë°ì´í„° ì‚­ì œ
 	@Override
 	public int deleteDiary(DiaryVO vo) {
 

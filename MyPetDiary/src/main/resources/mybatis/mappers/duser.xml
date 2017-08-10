@@ -14,4 +14,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where id=#{id} and pw=#{pw}
 	</select>
 
+	<!-- 2. 아이디 중복체크 -->
+	<!-- public String idCheck(String id) -->
+	<select id="idCheck" resultType="String" parameterType="String">
+		select id
+		from duser
+		where id=#{id}
+	</select>
+
+	<!-- 3. 회원 가입 -->
+	<!-- public int join(DUserVO vo) -->
+	<insert id="join" parameterType="DUserVO">
+		insert into
+		duser(id,pw,nickname)
+		values(#{id},#{pw}, #{nickname})
+	</insert>
+
 </mapper>

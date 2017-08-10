@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <!-- 반복문 사용을 위해서 태그 라이브러리 추가 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 사이즈 체크를 위해  -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,6 +30,16 @@
 
 	<div class="container">
 		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+
+			<c:if test="${fn:length(list) < 1}">
+
+				<div>
+					<h5>등록된 일기가 없습니다. 일기를 작성해주세요.</h5>
+
+				</div>
+
+			</c:if>
 
 			<!-- 반복문 시작 -->
 			<c:forEach items="${list}" var="list">
@@ -63,9 +75,10 @@
 
 
 			<!-- Pager -->
-			<ul class="pager">
+			<!--   <ul class="pager">
 				<li class="next"><a href="#">Older Posts &rarr;</a></li>
-			</ul>
+			</ul> -->
+
 		</div>
 	</div>
 

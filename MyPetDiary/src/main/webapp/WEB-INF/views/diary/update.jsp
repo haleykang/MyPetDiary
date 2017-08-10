@@ -29,23 +29,34 @@
 			if (input.files && input.files[0]) {
 				// 파일의 이름 가져오기
 				var filename = input.files[0].name;
+				var filesize = input.files[0].size;
+				// alert(filesize);
 				// 가장 뒤의 3자 가져오기 - 
 				var ext = filename.substr(filename.length - 3, filename.length);
 				// 그림 파일의 확장자인지 확인
 				if (ext.toLowerCase() == 'jpg' || ext.toLowerCase() == 'gif'
 						|| ext.toLowerCase() == 'png') {
-					// 그림파일의 확장자가 맞으면 파일의 내용을 읽어서 id가 image인 img 태그에 출력
-					var reader = new FileReader();
-					// 파일을 다 읽으면 호출되는 함수 설정 
-					reader.onload = function(e) {
-						$('#image').attr('src', e.target.result);
-						$('#helpmsg').html(''); // 이미지 등록 시 헬프메세지 없애기
+
+					if (filesize < 10485760) {
+						// 그림파일의 확장자가 맞으면 파일의 내용을 읽어서 id가 image인 img 태그에 출력
+						var reader = new FileReader();
+						// 파일을 다 읽으면 호출되는 함수 설정 
+						reader.onload = function(e) {
+							$('#image').attr('src', e.target.result);
+							$('#helpmsg').html(''); // 이미지 등록 시 헬프메세지 없애기
+						}
+
+					} else {
+						alert("10MB 미만의 파일만 등록 가능합니다.");
+						return;
+
 					}
 					// 선택한 파일을 읽기
 					reader.readAsDataURL(input.files[0]);
+
 				} else {
 					// 확장자가 이미지가 아님 
-					alert("이미지 파일만 등록 가능합니다.(확장자 - jpg, gif, png )");
+					alert("jpg, png 또는 gif 파일만 등록 가능합니다.");
 					return;
 				}
 			}
@@ -107,7 +118,8 @@
 							<c:if test="${detail.image != null}">
 								<div class="well" style="background: white; border: 1px;">
 									<br /> <img class="img-responsive center-block" id="image"
-										src="../diaryimage/${detail.image}" /> <br />
+										src="../diaryimage/${detail.image}" /> <br /> <input
+										type="hidden" name="iimmgg" value="${detail.image}">
 
 								</div>
 							</c:if>

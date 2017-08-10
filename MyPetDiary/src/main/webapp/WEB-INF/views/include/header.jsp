@@ -35,16 +35,25 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/mypet">Home</a></li>
+					<li><a href="/mypet"><span
+							class="glyphicon glyphicon-home text-primary">&nbsp;Home</span></a></li>
 				</ul>
 				<c:if test="${login == null}">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/mypet/user/login">Login</a></li>
+						<li><a href="/mypet/user/login"><span
+								class="glyphicon glyphicon-ok text-success">&nbsp;Login</span></a></li>
 					</ul>
 				</c:if>
 				<c:if test="${login != null}">
+
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/mypet/user/logout">Logout</a></li>
+						<li><a href="/mypet/user/logout"><span
+								class="glyphicon glyphicon-remove text-warning">&nbsp;Logout</span></a></li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/mypet/user/profile"><span
+								class="glyphicon glyphicon-user text-info">&nbsp;Profile</span></a></li>
 					</ul>
 				</c:if>
 			</div>

@@ -1,12 +1,18 @@
 package com.diary.mypet.domain;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 
-// Diary Å×ÀÌºí µ¥ÀÌÅÍº£ÀÌ½º ÀúÀå Å¬·¡½º 
+// Diary í…Œì´ë¸” ë°ì´í„° ì €
 
+/**
+ * @author Hailey
+ *
+ */
 public class DiaryVO {
 
-	// 1. ÄÃ·³ ÀÌ¸§°ú µ¿ÀÏÇÑ º¯¼ö ¼±¾ð
+	// 1. ë³€ìˆ˜ ì„ 
 	private int no;
 	private String title;
 	private String content;
@@ -15,17 +21,21 @@ public class DiaryVO {
 	private Date regdate;
 	private String id;
 
+	// ê³µìœ  ì»¬ëŸ¼ ì¶”ê°€
+	private String ckshare;
+
 	public DiaryVO() {
 
 	}
 
-	// id, no ¹Þ´Â »ý¼ºÀÚ
+	// ìƒì„±
 	public DiaryVO(int no, String id) {
 		this.no = no;
 		this.id = id;
 	}
 
 	// 2. Get, Set
+
 	public int getNo() {
 		return no;
 	}
@@ -55,7 +65,16 @@ public class DiaryVO {
 	}
 
 	public void setImage(String image) {
+
 		this.image = image;
+		// ì¸ì½”ë”©... ì œë°œ..
+		// try {
+		// this.image = URLEncoder.encode(image, "utf-8");
+		//
+		// } catch (UnsupportedEncodingException e) {
+		// e.printStackTrace();
+		// }
+
 	}
 
 	public int getReadcnt() {
@@ -82,11 +101,19 @@ public class DiaryVO {
 		this.id = id;
 	}
 
-	// 3.toString() -> µð¹ö±ë¿ë
+	public String getCkshare() {
+		return ckshare;
+	}
+
+	public void setCkshare(String ckshare) {
+		this.ckshare = ckshare;
+	}
+
+	// 3.toString()
 	@Override
 	public String toString() {
 		return "DiaryVO [no=" + no + ", title=" + title + ", content=" + content + ", image=" + image + ", readcnt="
-				+ readcnt + ", regdate=" + regdate + ", id=" + id + "]";
+				+ readcnt + ", regdate=" + regdate + ", id=" + id + ", ckshare=" + ckshare + "]";
 	}
 
 }

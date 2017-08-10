@@ -6,26 +6,26 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.diary.mypet.domain.DiaryVO;
 
-// ´ÙÀÌ¾î¸® °ü·Ã ÀÛ¾÷À» À§ÇÑ ¸Þ¼Òµå ¼ÒÀ¯ ÀÎÅÍÆäÀÌ½º
+// ë‹¤ì´ì–´ë¦¬ ê´€ë ¨ ìž‘ì—…ì„ ìœ„í•œ ë©”ì†Œë“œ ì†Œìœ  ì¸í„°íŽ˜ì´ìŠ¤
 public interface DiaryService {
 
-	// 1. ¸ð¾Æº¸±â(Å×ÀÌºí¿¡ ÀÖ´Â µ¥ÀÌÅÍ¸¦ ¾ÆÀÌµð ±âÁØÀ¸·Î °¡Á®¿Í¼­ º¸¿©ÁÖ±â, ±Û ¹øÈ£ ³»¸²Â÷¼ø)
+	// 1. ëª¨ì•„ë³´ê¸°(í…Œì´ë¸”ì— ìžˆëŠ” ë°ì´í„°ë¥¼ ì•„ì´ë”” ê¸°ì¤€ìœ¼ë¡œ ê°€ì ¸ì™€ì„œ ë³´ì—¬ì£¼ê¸°, ê¸€ ë²ˆí˜¸ ë‚´ë¦¼ì°¨ìˆœ)
 	public List<DiaryVO> selectAllDiary(String id);
 
-	// 2. »ó¼¼º¸±â(Æ¯Á¤ ¾ÆÀÌµð & ¼±ÅÃÇÑ ±Û¹øÈ£¸¦ ±âÁØÀ¸·Î µ¥ÀÌÅÍ¸¦ °¡Á®¿Í¼­ º¸¿©ÁÖ±â)
+	// 2. ìƒì„¸ë³´ê¸°(íŠ¹ì • ì•„ì´ë”” & ì„ íƒí•œ ê¸€ë²ˆí˜¸ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë°ì´í„°ë¥¼ ê°€ì ¸ì™€ì„œ ë³´ì—¬ì£¼ê¸°)
 	public DiaryVO selectOneDiary(DiaryVO vo);
 
-	// 3. ÀÏ±â ÀÛ¼º(±Û¹øÈ£(ÀÚµ¿), Á¦¸ñ, ³»¿ë, ÀÌ¹ÌÁö, ¾ÆÀÌµð(·Î±×ÀÎÇÏ¸é ÀÚµ¿À¸·Î µî·Ï) ÀÔ·Â ¹Þ¾Æ¼­ Å×ÀÌºí¿¡ ÀúÀå
+	// 3. ì¼ê¸° ìž‘ì„±(ê¸€ë²ˆí˜¸(ìžë™), ì œëª©, ë‚´ìš©, ì´ë¯¸ì§€, ì•„ì´ë””(ë¡œê·¸ì¸í•˜ë©´ ìžë™ìœ¼ë¡œ ë“±ë¡) ìž…ë ¥ ë°›ì•„ì„œ í…Œì´ë¸”ì— ì €ìž¥
 	public int insertDiary(MultipartHttpServletRequest request);
 
-	// 4. ÀÏ±â ¼öÁ¤(Á¦¸ñ, ³»¿ë, ÀÌ¹ÌÁö) ÀÔ·Â ¹Þ¾Æ¼­ Å×ÀÌºí¿¡ ÀúÀå
-	// ¸Å°³ º¯¼ö MultipartHttpServletRequest·Î º¯°æ
+	// 4. ì¼ê¸° ìˆ˜ì •(ì œëª©, ë‚´ìš©, ì´ë¯¸ì§€) ìž…ë ¥ ë°›ì•„ì„œ í…Œì´ë¸”ì— ì €ìž¥
+	// ë§¤ê°œ ë³€ìˆ˜ MultipartHttpServletRequestë¡œ ë³€ê²½
 	public int updateDiary(MultipartHttpServletRequest request);
 
-	// 4-1. ¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿
+	// 4-1. ìˆ˜ì • íŽ˜ì´ì§€ë¡œ ì´ë™
 	public DiaryVO goUpdate(DiaryVO vo);
 
-	// 5. ÀÏ±â »èÁ¦(±Û ¹øÈ£, ¾ÆÀÌµð ±âÁØÀ¸·Î »èÁ¦)
+	// 5. ì¼ê¸° ì‚­ì œ(ê¸€ ë²ˆí˜¸, ì•„ì´ë”” ê¸°ì¤€ìœ¼ë¡œ ì‚­ì œ)
 	public int deleteDiary(DiaryVO vo);
 
 }

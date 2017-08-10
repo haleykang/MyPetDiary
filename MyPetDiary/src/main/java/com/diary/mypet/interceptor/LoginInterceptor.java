@@ -9,42 +9,42 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-// ·Î±×ÀÎ ÀÎÅÍ¼ÁÅÍ
+// ë¡œê·¸ì¸ ì¸í„°ì…‰í„°
 
 public class LoginInterceptor implements HandlerInterceptor {
 
-	// ¿äÃ» Ã³¸® ÈÄ ºä ÆäÀÌÁö ÀÌµ¿ ÈÄ
+	// ìš”ì²­ ì²˜ë¦¬ í›„ ë·° í˜ì´ì§€ ì´ë™ í›„
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 			throws Exception {
 
 	}
 
-	// ¿äÃ» Ã³¸® ÈÄ ºä ÆäÀÌÁö ÀÌµ¿ Àü
+	// ìš”ì²­ ì²˜ë¦¬ í›„ ë·° í˜ì´ì§€ ì´ë™ ì „
 	@Override
 	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
 			throws Exception {
 
-		// 1) ·Î±×ÀÎ ¿©ºÎ¸¦ È®ÀÎÇÏ±â À§ÇØ ÄÁÆ®·Ñ·¯¿¡¼­ ¸ğµ¨¿¡ ÀúÀåÇÑ Á¤º¸ °¡Á®¿À±â
+		// 1) ë¡œê·¸ì¸ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ê¸° ìœ„í•´ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ëª¨ë¸ì— ì €ì¥í•œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 		ModelMap modelMap = arg3.getModelMap();
 
-		// 2) Object °´Ã¼¿¡ ¸ğµ¨¿¡¼­ °¡Á®¿Â login Á¤º¸ ÀúÀå
+		// 2) Object ê°ì²´ì— ëª¨ë¸ì—ì„œ ê°€ì ¸ì˜¨ login ì •ë³´ ì €ì¥
 		Object login = modelMap.get("login");
 
-		// 3) ·Î±×ÀÎ ¼º°ø ¿©ºÎ ÆÇ´Ü
+		// 3) ë¡œê·¸ì¸ ì„±ê³µ ì—¬ë¶€ íŒë‹¨
 		if (login == null) {
-			// ·Î±×ÀÎ ½ÇÆĞ
-			// ·Î±×ÀÎ ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ®
+			// ë¡œê·¸ì¸ ì‹¤íŒ¨
+			// ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŠ¸
 			HttpSession session = arg0.getSession();
 			session.setAttribute("loginmsg", "false");
 			arg1.sendRedirect("login");
 
 		} else {
-			// ·Î±×ÀÎ ¼º°ø
-			// (1) session¿¡ ·Î±×ÀÎ Á¤º¸ ÀúÀå
+			// ë¡œê·¸ì¸ ì„±ê³µ
+			// (1) sessionì— ë¡œê·¸ì¸ ì •ë³´ ì €ì¥
 			HttpSession session = arg0.getSession();
 			session.setAttribute("login", login);
-			// (2) ¿äÃ»ÀÌ µé¾î¿Â ÁÖ¼Ò È®ÀÎ
+			// (2) ìš”ì²­ì´ ë“¤ì–´ì˜¨ ì£¼ì†Œ í™•ì¸
 			String dest = (String) session.getAttribute("dest");
 			if (dest == null) {
 				arg1.sendRedirect("/mypet");
@@ -56,23 +56,23 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	}
 
-	// ¿äÃ» Ã³¸® Àü
-	// true ¸®ÅÏ - Controller·Î °¡¼­ ´ÙÀ½ ¿äÃ» Ã³¸®
-	// false ¸®ÅÏ - Controller·Î ÀÌµ¿ ¾ÈÇÔ
+	// ìš”ì²­ ì²˜ë¦¬ ì „
+	// true ë¦¬í„´ - Controllerë¡œ ê°€ì„œ ë‹¤ìŒ ìš”ì²­ ì²˜ë¦¬
+	// false ë¦¬í„´ - Controllerë¡œ ì´ë™ ì•ˆí•¨
 	@Override
 	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2) throws Exception {
 
-		// ·Î±×ÀÎ Ã³¸® Àü ±âÁ¸ ·Î±×ÀÎ Á¤º¸°¡ ÀÖÀ¸¸é »èÁ¦
+		// ë¡œê·¸ì¸ ì²˜ë¦¬ ì „ ê¸°ì¡´ ë¡œê·¸ì¸ ì •ë³´ê°€ ìˆìœ¼ë©´ ì‚­ì œ
 
-		// 1) ¼¼¼Ç °¡Á®¿À±â
+		// 1) ì„¸ì…˜ ê°€ì ¸ì˜¤ê¸°
 		HttpSession session = arg0.getSession();
-		// 2) ·Î±×ÀÎ Á¤º¸°¡ ÀÖÀ¸¸é »èÁ¦
+		// 2) ë¡œê·¸ì¸ ì •ë³´ê°€ ìˆìœ¼ë©´ ì‚­ì œ
 		if (session != null) {
 			session.removeAttribute("login");
 			session.removeAttribute("loginmsg");
 		}
 
-		// 3) ÄÁÆ®·Ñ·¯°¡ ¿äÃ» Ã³¸®
+		// 3) ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ìš”ì²­ ì²˜ë¦¬
 		return true;
 	}
 

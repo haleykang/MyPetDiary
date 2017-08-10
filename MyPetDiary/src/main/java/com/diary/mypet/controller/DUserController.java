@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.diary.mypet.domain.DUserVO;
 import com.diary.mypet.service.DUserService;
 
-// user·Î ½ÃÀÛÇÏ´Â ¿äÃ» Ã³¸® ÄÁÆ®·Ñ·¯
+// userë¡œ ì‹œì‘í•˜ëŠ” ìš”ì²­ ì²˜ë¦¬ ì»¨íŠ¸ë¡¤ëŸ¬
 
 @Controller
 @RequestMapping("user/*")
@@ -21,51 +21,78 @@ public class DUserController {
 	@Autowired
 	private DUserService service;
 
-	// 1. ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿ÇÏ´Â ¿äÃ» Ã³¸®
+	// 1. ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ì´ë™í•˜ëŠ” ìš”ì²­ ì²˜ë¦¬
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public void goLogin() {
-		// ·Î±×ÀÎ ÆäÀÌÁö·Î ´Ü¼ø ÀÌµ¿
+		// ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ë‹¨ìˆœ ì´ë™
 	}
 
-	// 2. ·Î±×ÀÎ ¿äÃ» Ã³¸®
-	// »ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ id¿Í pw¸¦ °¡Á®¿Í¼­ ÀÏÄ¡ÇÑ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é !null, ¾øÀ¸¸é null
-	// ¼¼¼Ç Ã³¸® -> ¼öÁ¤ ÀÎÅÍ¼ÁÅÍ·Î
+	// 2. ë¡œê·¸ì¸ ìš”ì²­ ì²˜ë¦¬
+	// ì‚¬ìš©ìê°€ ì…ë ¥í•œ idì™€ pwë¥¼ ê°€ì ¸ì™€ì„œ ì¼ì¹˜í•œ ë°ì´í„°ê°€ ìˆìœ¼ë©´ !null, ì—†ìœ¼ë©´ null
+	// ì„¸ì…˜ ì²˜ë¦¬ -> ìˆ˜ì • ì¸í„°ì…‰í„°ë¡œ
 	@RequestMapping(value = "loginPost", method = RequestMethod.POST)
 	// public String login(DUserVO vo, HttpSession session, RedirectAttributes
 	// attr)
 	public void login(DUserVO vo, Model model, RedirectAttributes attr) {
-		// 1) ¼­ºñ½º ·Î±×ÀÎ ÇÔ¼ö ½ÇÇà
+		// 1) ì„œë¹„ìŠ¤ ë¡œê·¸ì¸ í•¨ìˆ˜ ì‹¤í–‰
 		DUserVO login = service.login(vo);
 
-		// 2) model¿¡ login °ª ÀúÀå (·Î±×ÀÎ ¼º°ø½Ã µ¥ÀÌÅÍ, ½ÇÆĞ½Ã null)
+		// 2) modelì— login ê°’ ì €ì¥ (ë¡œê·¸ì¸ ì„±ê³µì‹œ ë°ì´í„°, ì‹¤íŒ¨ì‹œ null)
 		model.addAttribute("login", login);
 		// attr.addFlashAttribute("msg", "false");
 
-		// 3) »ç¿ëÇÏÁö ¾Ê´Â ÆäÀÌÁö·Î ÀÌµ¿
+		// 3) ì‚¬ìš©í•˜ì§€ ì•ŠëŠ” í˜ì´ì§€ë¡œ ì´ë™
 
 		// return "redirect:login";
-		// ÀÎÅÍ¼ÁÅÍ Àû¿ëÀ» À§ÇØ »èÁ¦
+		// ì¸í„°ì…‰í„° ì ìš©ì„ ìœ„í•´ ì‚­ì œ
 		/*
-		 * // 2) ·Î±×ÀÎ ¼º°ø ¿©ºÎ È®ÀÎ if (login == null) { // ·Î±×ÀÎ ½ÇÆĞ // (1) session¿¡
-		 * null ÀúÀå session.setAttribute("login", null); // (2) ·Î±×ÀÎ ½ÇÆĞ ¸Ş¼¼Áö Àü´Ş
-		 * attr.addFlashAttribute("msg", "false"); // (3) ·Î±×ÀÎ ÆäÀÌÁö·Î Àç ÀÌµ¿ return
+		 * // 2) ë¡œê·¸ì¸ ì„±ê³µ ì—¬ë¶€ í™•ì¸ if (login == null) { // ë¡œê·¸ì¸ ì‹¤íŒ¨ // (1) sessionì— null ì €ì¥
+		 * session.setAttribute("login", null); // (2) ë¡œê·¸ì¸ ì‹¤íŒ¨ ë©”ì„¸ì§€ ì „ë‹¬
+		 * attr.addFlashAttribute("msg", "false"); // (3) ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ì¬ ì´ë™ return
 		 * "redirect:login";
 		 * 
-		 * } else { // ·Î±×ÀÎ ¼º°ø // (1) ¼¼¼Ç¿¡ ·Î±×ÀÎ Á¤º¸ ÀúÀå session.setAttribute("login",
-		 * login); // (2) ÀÌµ¿ÇÒ ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ® -> ÀÏ´Ü ¸ŞÀÎÀ¸·Î.. return "redirect:/";
+		 * } else { // ë¡œê·¸ì¸ ì„±ê³µ // (1) ì„¸ì…˜ì— ë¡œê·¸ì¸ ì •ë³´ ì €ì¥ session.setAttribute("login", login);
+		 * // (2) ì´ë™í•  í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŠ¸ -> ì¼ë‹¨ ë©”ì¸ìœ¼ë¡œ.. return "redirect:/";
 		 * 
 		 * }
 		 */
 	}
 
-	// 3. ·Î±×¾Æ¿ô Ã³¸® -> ¼¼¼Ç ÃÊ±âÈ­ ÇØ¾ßÇÔ
+	// 3. ë¡œê·¸ì•„ì›ƒ ì²˜ë¦¬ -> ì„¸ì…˜ ì´ˆê¸°í™” í•´ì•¼í•¨
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		// 1) ¼¼¼Ç ÃÊ±âÈ­
+		// 1) ì„¸ì…˜ ì´ˆê¸°í™”
 		session.invalidate();
-		// 2) ¸ŞÀÎ ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ®
+		// 2) ë©”ì¸ í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŠ¸
 		return "redirect:/";
 
 	}
+
+	// 4. íšŒì› ê°€ì… í˜ì´ì§€ë¡œ ì´ë™ ìš”ì²­ ì²˜ë¦¬
+	@RequestMapping(value = "join", method = RequestMethod.GET)
+	public void goJoin() {
+
+		// ë‹¨ìˆœ ì´ë™
+
+	}
+
+	// 5. íšŒì› ê°€ì… ì²˜ë¦¬
+	@RequestMapping(value = "join", method = RequestMethod.POST)
+	public String join(DUserVO vo, RedirectAttributes attr) {
+
+		int result = service.join(vo);
+		System.out.println("Result for Join : " + result);
+		attr.addFlashAttribute("msg", "true");
+		return "redirect:login";
+
+	}
+
+	// 6. í”„ë¡œí•„ í™”ë©´ìœ¼ë¡œ ì´ë™í•˜ëŠ” ë©”ì†Œë“œ
+	@RequestMapping(value = "profile", method = RequestMethod.GET)
+	public void goProfile() {
+
+	}
+	
+	
 
 }

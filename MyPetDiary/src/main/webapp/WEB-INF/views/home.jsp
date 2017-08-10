@@ -9,7 +9,7 @@
 <div class="jumbotron"
 	style="background-image: url('/mypet/resources/theme/img/about-bg.jpg')">
 	<div class="row">
-		<div class="col-md-6 col-md-offset-1">
+		<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-1">
 			<h1 style="color: white">My Pet Diary</h1>
 
 			<p style="color: white">

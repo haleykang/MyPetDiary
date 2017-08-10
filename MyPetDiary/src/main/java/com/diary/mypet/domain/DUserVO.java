@@ -1,10 +1,13 @@
 package com.diary.mypet.domain;
 
-// DUser Å×ÀÌºíÀÇ µ¥ÀÌÅÍ ÀúÀå
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+// DUser í…Œì´ë¸” ë°ì´í„° ì €
 
 public class DUserVO {
 
-	// 1. ÄÃ·³ º¯¼ö ¼±¾ğ
+	// 1. ë³€ìˆ˜ ì„ 
 	private String id;
 	private String pw;
 	private String profile;
@@ -32,6 +35,7 @@ public class DUserVO {
 	}
 
 	public void setProfile(String profile) {
+
 		this.profile = profile;
 	}
 

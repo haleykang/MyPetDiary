@@ -7,11 +7,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-// Á¢±Ù »ç¿ëÀÚ ±ÇÇÑ ¿©ºÎ È®ÀÎ
+// ì ‘ê·¼ ì‚¬ìš©ì ê¶Œí•œ ì—¬ë¶€ í™•ì¸
 
 public class AuthInterceptor implements HandlerInterceptor {
 
-	// ºäÆäÀÌÁö ÀÌµ¿ ÈÄ
+	// ë·°í˜ì´ì§€ ì´ë™ í›„
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 			throws Exception {
@@ -19,7 +19,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	}
 
-	// ¿äÃ» Ã³¸® ÈÄ ºä ÆäÀÌÁö ÀÌµ¿ Àü
+	// ìš”ì²­ ì²˜ë¦¬ í›„ ë·° í˜ì´ì§€ ì´ë™ ì „
 	@Override
 	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
 			throws Exception {
@@ -27,35 +27,35 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	}
 
-	// ÄÁÆ®·Ñ·¯ ½ÇÇà Àü
-	// ¿äÃ»À¸·Î ÀÌµ¿ÇÏ±â Àü ·Î±×ÀÎÀÌ µÇ¾îÀÖ´ÂÁö ¿©ºÎ È®ÀÎ
+	// ì»¨íŠ¸ë¡¤ëŸ¬ ì‹¤í–‰ ì „
+	// ìš”ì²­ìœ¼ë¡œ ì´ë™í•˜ê¸° ì „ ë¡œê·¸ì¸ì´ ë˜ì–´ìˆëŠ”ì§€ ì—¬ë¶€ í™•ì¸
 	@Override
 	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2) throws Exception {
-		// 1) ¼¼¼Ç °¡Á®¿À±â
+		// 1) ì„¸ì…˜ ê°€ì ¸ì˜¤ê¸°
 		HttpSession session = arg0.getSession();
-		// 2) ·Î±×ÀÎ ¿©ºÎ È®ÀÎ
+		// 2) ë¡œê·¸ì¸ ì—¬ë¶€ í™•ì¸
 		if (session.getAttribute("login") == null) {
-			// (1) ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿ Àü ¿äÃ»ÀÌ µé¾î¿Â °æ·Î ¹Ì¸® ÀúÀå
+			// (1) ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ì´ë™ ì „ ìš”ì²­ì´ ë“¤ì–´ì˜¨ ê²½ë¡œ ë¯¸ë¦¬ ì €ì¥
 			String uri = arg0.getRequestURI();
-			// (2) ÆÄ¶ó¹ÌÅÍ ¹®ÀÚ¿­ °¡Á®¿À±â -> µÚ¿¡ Ãß°¡µÈ ÆÄ¶ó¹ÌÅÍ µé
+			// (2) íŒŒë¼ë¯¸í„° ë¬¸ìì—´ ê°€ì ¸ì˜¤ê¸° -> ë’¤ì— ì¶”ê°€ëœ íŒŒë¼ë¯¸í„° ë“¤
 			String query = arg0.getQueryString();
-			// (3) Äõ¸®°¡ ¾øÀ¸¸é "" ÀÖ´Ù¸é ? ÇüÅÂ·Î Ãß°¡
+			// (3) ì¿¼ë¦¬ê°€ ì—†ìœ¼ë©´ "" ìˆë‹¤ë©´ ? í˜•íƒœë¡œ ì¶”ê°€
 			if (query == null || query.equals("null")) {
 				query = "";
 			} else {
 				query = "?" + query;
 			}
-			// (4) ¼¼¼Ç¿¡ dest Å°·Î uri¿Í Äõ¸® ÀúÀå
+			// (4) ì„¸ì…˜ì— dest í‚¤ë¡œ uriì™€ ì¿¼ë¦¬ ì €ì¥
 			session.setAttribute("dest", uri + query);
 
-			// (5) ·Î±×ÀÎ ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ®
+			// (5) ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŠ¸
 			arg1.sendRedirect("/mypet/user/login");
 
-			// (6) ÄÁÆ®·Ñ·¯ Ã³¸® ¾ÈÇÔ
+			// (6) ì»¨íŠ¸ë¡¤ëŸ¬ ì²˜ë¦¬ ì•ˆí•¨
 			return false;
 
 		}
-		// ·Î±×ÀÎ µÈ »óÅÂ¶ó¸é ÄÁÆ®·Ñ·¯ Ã³¸®
+		// ë¡œê·¸ì¸ ëœ ìƒíƒœë¼ë©´ ì»¨íŠ¸ë¡¤ëŸ¬ ì²˜ë¦¬
 		return true;
 	}
 

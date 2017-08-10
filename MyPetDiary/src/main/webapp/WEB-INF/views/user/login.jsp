@@ -29,8 +29,21 @@
 			<!-- 경고 창 끝 -->
 		</c:if>
 
+		<c:if test="${msg != null}">
+
+			<div class="alert alert-default alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>회원 가입에 성공하였습니다!&nbsp;</strong> 로그인을 진행해주세요.
+			</div>
+
+			<!-- 경고 창 끝 -->
+		</c:if>
+
 		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			class="mainbox col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-2">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 					<div class="panel-title">로그인</div>
@@ -72,7 +85,7 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									아직 회원이 아니신가요?&nbsp;&nbsp;<a href="#" class="">회원가입</a>
+									아직 회원이 아니신가요?&nbsp;&nbsp;<a href="join" class="">회원가입</a>
 								</div>
 							</div>
 						</div>

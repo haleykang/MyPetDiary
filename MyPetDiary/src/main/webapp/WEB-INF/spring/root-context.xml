@@ -9,9 +9,9 @@
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		id="dataSource">
 		<property value="oracle.jdbc.driver.OracleDriver" name="driverClassName" />
-		<property value="jdbc:oracle:thin:@localhost:1521:xe" name="url" />
-		<property value="user01" name="username" />
-		<property value="user01" name="password" />
+		<property value="jdbc:oracle:thin:@127.0.0.1:1521:orcl12c" name="url" />
+		<property value="system" name="username" />
+		<property value="oracle" name="password" />
 	</bean>
 
 	<!-- 마이바티스 환경 설정 -->

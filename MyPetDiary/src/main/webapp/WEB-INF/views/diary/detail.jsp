@@ -63,7 +63,7 @@
 				<hr>
 				<div>
 					<label class="control-label"><strong>오늘의 이미지</strong></label>
-					<c:if test="${detail.image != null }">
+					<c:if test="${detail.image != null}">
 						<div class="well" style="background: white; border: 1px;">
 							<br /> <img class="img-responsive center-block" id="image"
 								src="../diaryimage/${detail.image}" />

@@ -8,49 +8,49 @@ import org.springframework.stereotype.Repository;
 
 import com.diary.mypet.domain.DiaryVO;
 
-// DiaryDao¸¦ »ó¼Ó ¹Ş´Â Å¬·¡½º - ½ÇÁ¦ SQL ÀÛ¾÷ ¸Ş¼Òµå ±¸Çö
+// DiaryDaoë¥¼ ìƒì† ë°›ëŠ” í´ë˜ìŠ¤ - ì‹¤ì œ SQL ì‘ì—… ë©”ì†Œë“œ êµ¬í˜„
 @Repository
 public class DiaryDaoImpl implements DiaryDao {
 
 	@Autowired
 	private SqlSession sqlSession;
 
-	// 1. ¸ğ¾Æº¸±â
+	// 1. ëª¨ì•„ë³´ê¸°
 	@Override
 	public List<DiaryVO> selectAllDiary(String id) {
 
 		return sqlSession.selectList("diary.selectAllDiary", id);
 	}
 
-	// 2. »ó¼¼º¸±â
+	// 2. ìƒì„¸ë³´ê¸°
 	@Override
 	public DiaryVO selectOneDiary(DiaryVO vo) {
 
 		return sqlSession.selectOne("diary.selectOneDiary", vo);
 	}
 
-	// 3. Á¶È¸¼ö Áõ°¡
+	// 3. ì¡°íšŒìˆ˜ ì¦ê°€
 	@Override
 	public int updateCount(DiaryVO vo) {
 
 		return sqlSession.update("diary.updateCount", vo);
 	}
 
-	// 4. ´ÙÀÌ¾î¸® µî·Ï
+	// 4. ë‹¤ì´ì–´ë¦¬ ë“±ë¡
 	@Override
 	public int insertDiary(DiaryVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("diary.insertDiary", vo);
 	}
 
-	// 5. ´ÙÀÌ¾î¸® ¼öÁ¤
+	// 5. ë‹¤ì´ì–´ë¦¬ ìˆ˜ì •
 	@Override
 	public int updateDiary(DiaryVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("diary.updateDiary", vo);
 	}
 
-	// 6. ´ÙÀÌ¾î¸® »èÁ¦
+	// 6. ë‹¤ì´ì–´ë¦¬ ì‚­ì œ
 	@Override
 	public int deleteDiary(DiaryVO vo) {
 		// TODO Auto-generated method stub

@@ -2,6 +2,9 @@ package com.diary.mypet.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.diary.mypet.domain.DUserVO;
 import com.diary.mypet.domain.DiaryVO;
 import com.diary.mypet.service.DiaryService;
 
-// diary/·Î ½ÃÀÛµÇ´Â ¿äÃ» Ã³¸® ÄÁÆ®·Ñ·¯
+// diary/ë¡œ ì‹œì‘ë˜ëŠ” ìš”ì²­ ì²˜ë¦¬ ì»¨íŠ¸ë¡¤ëŸ¬
 @Controller
 @RequestMapping("diary/*")
 public class DiaryController {
@@ -22,114 +26,120 @@ public class DiaryController {
 	@Autowired
 	private DiaryService service;
 
-	// 1. ±Û¾²±â ÆäÀÌÁö·Î ÀÌµ¿ÇÏ´Â ¸Ş¼Òµå
+	// 1. ê¸€ì“°ê¸° í˜ì´ì§€ë¡œ ì´ë™í•˜ëŠ” ë©”ì†Œë“œ
 	@RequestMapping(value = "write", method = RequestMethod.GET)
 	public void writeGet() {
-		// /board/write.jsp·Î ´Ü¼ø ÀÌµ¿ ¸Ş¼Òµå
+
 	}
 
-	// 2. ÀÏ±â ÀÛ¼º ÈÄ Å×ÀÌºí¿¡ ÀúÀåÇÏ´Â ¸Ş¼Òµå
-	// ÀÌ¹ÌÁö ¾÷·Îµå¸¦ À§ÇØ ¸Å°³ º¯¼ö MultipartHttpSerlvetRequest·Î º¯°æ
+	// 2. ì¼ê¸° ì‘ì„± í›„ í…Œì´ë¸”ì— ì €ì¥í•˜ëŠ” ë©”ì†Œë“œ
+	// ì´ë¯¸ì§€ ì—…ë¡œë“œë¥¼ ìœ„í•´ ë§¤ê°œ ë³€ìˆ˜ MultipartHttpSerlvetRequestë¡œ ë³€ê²½
 	@RequestMapping(value = "write", method = RequestMethod.POST)
 	public String writePost(MultipartHttpServletRequest request, RedirectAttributes attr) {
 
-		// 1) »ç¿ëÀÚ°¡ ÀÛ¼ºÇÑ id(ÀÏ´Ü default 'root'), title, content Å×ÀÌºí¿¡ ÀÔ·Â
+		// 1) ì‚¬ìš©ìê°€ ì‘ì„±í•œ id(ì¼ë‹¨ default 'root'), title, content í…Œì´ë¸”ì— ì…ë ¥
 		int result = service.insertDiary(request);
 
 		if (result < 1) {
 
-			// ±Û ¾²±â ½ÇÆĞ½Ã ´Ù½Ã ±Û ¾²±â ÆäÀÌÁö·Î
+			// ê¸€ ì“°ê¸° ì‹¤íŒ¨ì‹œ ë‹¤ì‹œ ê¸€ ì“°ê¸° í˜ì´ì§€ë¡œ
 			return "redirect:write";
 
 		} else {
 
-			// ±Û ¾²±â ¼º°ø½Ã ¼º°ø °á°ú ÆäÀÌÁö·Î ÀÌµ¿
-			// ÀÌµ¿ÇÏ¸é¼­ ±Û ÀÛ¼º ¼º°ø ¸Ş¼¼Áö ÀúÀåÇØ¼­ º¸³»±â
-			attr.addFlashAttribute("msg", "ÀÏ±â°¡ µî·ÏµÇ¾ú½À´Ï´Ù.");
+			// ê¸€ ì“°ê¸° ì„±ê³µì‹œ ì„±ê³µ ê²°ê³¼ í˜ì´ì§€ë¡œ ì´ë™
+			// ì´ë™í•˜ë©´ì„œ ê¸€ ì‘ì„± ì„±ê³µ ë©”ì„¸ì§€ ì €ì¥í•´ì„œ ë³´ë‚´ê¸°
+			attr.addFlashAttribute("msg", "ì¼ê¸°ê°€ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.");
 			return "redirect:result";
 		}
 
 	}
 
-	// 3. ±Û ¾²±â/±Û ¼öÁ¤/±Û »èÁ¦ ÈÄ ¼º°ø ¸Ş¼¼Áö º¸¿©ÁÖ´Â result.jsp·Î ÀÌµ¿ÇÏ´Â ¸Ş¼Òµå
+	// 3. ê¸€ ì“°ê¸°/ê¸€ ìˆ˜ì •/ê¸€ ì‚­ì œ í›„ ì„±ê³µ ë©”ì„¸ì§€ ë³´ì—¬ì£¼ëŠ” result.jspë¡œ ì´ë™í•˜ëŠ” ë©”ì†Œë“œ
 	@RequestMapping(value = "result", method = RequestMethod.GET)
 	public void toResult() {
 
 	}
 
-	// 4. ¸ğ¾Æ º¸±â È­¸éÀ¸·Î ÀÌµ¿ÇÏ´Â ¸Ş¼Òµå
+	// 4. ëª¨ì•„ ë³´ê¸° í™”ë©´ìœ¼ë¡œ ì´ë™í•˜ëŠ” ë©”ì†Œë“œ
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public void goList(Model model) {
-		// 1) ¾ÆÀÌµğ ±âÁØÀ¸·Î Å×ÀÌºí µ¥ÀÌÅÍ °¡Á®¿À´Â ÇÔ¼ö ½ÇÇà ÈÄ ¸®½ºÆ®¿¡ ÀúÀå
-		List<DiaryVO> list = service.selectAllDiary("root");
-		// 2) ¸®½ºÆ® ÆäÀÌÁö¿¡ °ª Àü´ŞÇÏ±â À§ÇØ¼­ ¸ğµ¨ °´Ã¼¿¡ ÀúÀå
+	public void goList(Model model, HttpServletRequest request) {
+		// 1) ì•„ì´ë”” ê¸°ì¤€ìœ¼ë¡œ í…Œì´ë¸” ë°ì´í„° ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜ ì‹¤í–‰ í›„ ë¦¬ìŠ¤íŠ¸ì— ì €ì¥
+		// ì„¸ì…˜ì— ì €ì¥ëœ ì•„ì´ë”” ê°€ì ¸ì˜¤ê¸°
+		HttpSession session = request.getSession();
+		DUserVO login = (DUserVO) session.getAttribute("login");
+		String id = login.getId();
+		// System.out.println(id);
+
+		List<DiaryVO> list = service.selectAllDiary(id);
+		// 2) ë¦¬ìŠ¤íŠ¸ í˜ì´ì§€ì— ê°’ ì „ë‹¬í•˜ê¸° ìœ„í•´ì„œ ëª¨ë¸ ê°ì²´ì— ì €ì¥
 		model.addAttribute("list", list);
-		// 3) diary/list.jsp ÆäÀÌÁö·Î ÀÌµ¿
+		// 3) diary/list.jsp í˜ì´ì§€ë¡œ ì´ë™
 
 	}
 
-	// 5. »ó¼¼º¸±â Ã³¸® ¸Ş¼Òµå - »ó¼¼º¸±â ÆäÀÌÁö·Î ÀÌµ¿
+	// 5. ìƒì„¸ë³´ê¸° ì²˜ë¦¬ ë©”ì†Œë“œ - ìƒì„¸ë³´ê¸° í˜ì´ì§€ë¡œ ì´ë™
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
 	public void detail(@RequestParam("no") int no, @RequestParam("id") String id, Model model) {
-		// 1) ¼­ºñ½º ÇÔ¼öÀÇ ¸Å°³º¯¼ö·Î »ç¿ëÇÏ±â À§ÇØ DiaryVO °´Ã¼ »ı¼º
+		// 1) ì„œë¹„ìŠ¤ í•¨ìˆ˜ì˜ ë§¤ê°œë³€ìˆ˜ë¡œ ì‚¬ìš©í•˜ê¸° ìœ„í•´ DiaryVO ê°ì²´ ìƒì„±
 		DiaryVO vo = new DiaryVO();
 		vo.setId(id);
 		vo.setNo(no);
 
-		// 2) 1¹øÀ» ¸Å°³ º¯¼ö·Î ÀÏÄ¡ÇÏ´Â µ¥ÀÌÅÍ¸¦ Ãâ·ÂÇÏ´Â ÇÔ¼ö ½ÇÇà ÈÄ ÀúÀå
+		// 2) 1ë²ˆì„ ë§¤ê°œ ë³€ìˆ˜ë¡œ ì¼ì¹˜í•˜ëŠ” ë°ì´í„°ë¥¼ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜ ì‹¤í–‰ í›„ ì €ì¥
 		DiaryVO detail = service.selectOneDiary(vo);
 
-		// 3) model °´Ã¼¿¡ ÀúÀå
+		// 3) model ê°ì²´ì— ì €ì¥
 		model.addAttribute("detail", detail);
 
-		// 4) detail ÆäÀÌÁö·Î ÀÌµ¿
+		// 4) detail í˜ì´ì§€ë¡œ ì´ë™
 	}
 
-	// 6. »èÁ¦ Ã³¸® ¸Ş¼Òµå
+	// 6. ì‚­ì œ ì²˜ë¦¬ ë©”ì†Œë“œ
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public String delete(@RequestParam("no") int no, @RequestParam("id") String id, RedirectAttributes attr) {
 
-		// 1) ¼­ºñ½º ¸Å°³ º¯¼ö·Î »ç¿ëÇÒ VO Å¬·¡½º °¡Á®¿Í¼­ no¿Í id ÀúÀå
+		// 1) ì„œë¹„ìŠ¤ ë§¤ê°œ ë³€ìˆ˜ë¡œ ì‚¬ìš©í•  VO í´ë˜ìŠ¤ ê°€ì ¸ì™€ì„œ noì™€ id ì €ì¥
 		DiaryVO vo = new DiaryVO();
 		vo.setNo(no);
 		vo.setId(id);
 
-		// 2) »èÁ¦ ÇÔ¼ö ½ÇÇà
+		// 2) ì‚­ì œ í•¨ìˆ˜ ì‹¤í–‰
 		int res = service.deleteDiary(vo);
 		System.out.println("Result for delete : " + res);
 
-		// 3) »èÁ¦ ¸Ş¼¼Áö ÀúÀå
-		attr.addFlashAttribute("msg", "ÀÏ±â¸¦ »èÁ¦ÇÏ¿´½À´Ï´Ù.");
+		// 3) ì‚­ì œ ë©”ì„¸ì§€ ì €ì¥
+		attr.addFlashAttribute("msg", "ì¼ê¸°ë¥¼ ì‚­ì œí•˜ì˜€ìŠµë‹ˆë‹¤.");
 
-		// 4) °á°ú ÆäÀÌÁö·Î ÀÌµ¿
+		// 4) ê²°ê³¼ í˜ì´ì§€ë¡œ ì´ë™
 		return "redirect:result";
 
 	}
 
-	// 7. ¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿ ¸Ş¼Òµå
+	// 7. ìˆ˜ì • í˜ì´ì§€ë¡œ ì´ë™ ë©”ì†Œë“œ
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public void goUpdate(@RequestParam("no") int no, @RequestParam("id") String id, Model model) {
-		// 1) ¼­ºñ½º ¸Å°³ º¯¼ö VO Å¬·¡½º¿¡ ÀúÀå -> ±ÍÂúÀ½...
+		// 1) ì„œë¹„ìŠ¤ ë§¤ê°œ ë³€ìˆ˜ VO í´ë˜ìŠ¤ì— ì €ì¥ -> ê·€ì°®ìŒ...
 		DiaryVO vo = new DiaryVO(no, id);
-		// 2) ¼­ºñ½º ¸Ş¼Òµå ½ÇÇà
+		// 2) ì„œë¹„ìŠ¤ ë©”ì†Œë“œ ì‹¤í–‰
 		DiaryVO detail = service.goUpdate(vo);
-		// 3) ¸ğµ¨ °´Ã¼¿¡ µ¥ÀÌÅÍ ÀúÀÛ
+		// 3) ëª¨ë¸ ê°ì²´ì— ë°ì´í„° ì €ì‘
 		model.addAttribute("detail", detail);
-		// 4) ¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿
+		// 4) ìˆ˜ì • í˜ì´ì§€ë¡œ ì´ë™
 	}
 
-	// 8. °Ô½Ã±Û ¼öÁ¤ ¸Ş¼Òµå
+	// 8. ê²Œì‹œê¸€ ìˆ˜ì • ë©”ì†Œë“œ
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(MultipartHttpServletRequest request, RedirectAttributes attr) {
 
-		// 1) service ¼öÁ¤ ¸Ş¼Òµå È£Ãâ
+		// 1) service ìˆ˜ì • ë©”ì†Œë“œ í˜¸ì¶œ
 		int result = service.updateDiary(request);
 		System.out.println("Result for update : " + result);
 
-		// 2) ¼öÁ¤ ¼º°ø ¸Ş¼¼Áö ÀúÀå
-		attr.addFlashAttribute("msg", "ÀÏ±â¸¦ ¼öÁ¤ÇÏ¿´½À´Ï´Ù.");
+		// 2) ìˆ˜ì • ì„±ê³µ ë©”ì„¸ì§€ ì €ì¥
+		attr.addFlashAttribute("msg", "ì¼ê¸°ë¥¼ ìˆ˜ì •í•˜ì˜€ìŠµë‹ˆë‹¤.");
 
-		// 3) °á°ú ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ®
+		// 3) ê²°ê³¼ í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŠ¸
 		return "redirect:result";
 	}
 
