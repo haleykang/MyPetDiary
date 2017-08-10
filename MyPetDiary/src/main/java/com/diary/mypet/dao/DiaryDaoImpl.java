@@ -57,4 +57,11 @@ public class DiaryDaoImpl implements DiaryDao {
 		return sqlSession.delete("diary.deleteDiary", vo);
 	}
 
+	// 7. 모두의 다이어리
+	@Override
+	public List<DiaryVO> shareAllDiary() {
+
+		return sqlSession.selectList("diary.shareAllDiary");
+	}
+
 }

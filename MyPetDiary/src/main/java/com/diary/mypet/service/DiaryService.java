@@ -27,5 +27,8 @@ public interface DiaryService {
 
 	// 5. 일기 삭제(글 번호, 아이디 기준으로 삭제)
 	public int deleteDiary(DiaryVO vo);
+	
+	// 6. 모두의 일기장 
+	public List<DiaryVO> shareAllDiary();
 
 }

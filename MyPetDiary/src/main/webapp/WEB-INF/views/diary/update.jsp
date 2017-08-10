@@ -131,10 +131,27 @@
 						</div>
 					</div>
 
+					<hr>
+					<!-- 공유 설정 체크박스 추가 -->
+
+					<div class="form-group">
+						<c:if test="${detail.ckshare == 'true' }">
+							<input type="checkbox" name="ckshare" value="true"
+								checked="checked">&nbsp;<span
+								class="glyphicon glyphicon-share text-primary"></span>&nbsp;작성한
+							일기를 게시판에 공유합니다.
+						</c:if>
+
+						<c:if test="${detail.ckshare == 'false' }">
+							<input type="checkbox" name="ckshare" value="true">&nbsp;<span
+								class="glyphicon glyphicon-share text-primary"></span>&nbsp;작성한
+							일기를 게시판에 공유합니다.
+						</c:if>
+					</div>
 
 					<br />
 					<div class="box-footer">
-						<hr>
+
 						<div class="text-center">
 							<button type="submit" class="btn btn-success">수정완료</button>
 						</div>

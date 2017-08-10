@@ -19,7 +19,7 @@
 		<div align="right">
 			<p>
 				<a href="write" class="btn btn-link"><span
-					class="glyphicon glyphicon-pencil"></span>일기 작성</a>
+					class="glyphicon glyphicon-pencil text-info">&nbsp;일기쓰기</span></a>
 			</p>
 		</div>
 		<hr>
@@ -45,44 +45,35 @@
 			<c:forEach items="${list}" var="list">
 
 				<div class="media">
-					<c:if test="${list.image == null}">
-						<div class="media-left">
-							<a href="detail?no=${list.no}&id=${list.id}"> <img
-								class="media-object" src="">
-							</a>
-						</div>
 
-					</c:if>
-					<c:if test="${list.image != null}">
+					<div class="col-xs-6 col-md-3">
+						<a href="detail?no=${list.no}&id=${list.id}" class="thumbnail">
+							<img src="../diaryimage/${list.image}">
+						</a>
+					</div>
 
-						<div class="col-xs-6 col-md-3">
-							<a href="detail?no=${list.no}&id=${list.id}" class="thumbnail">
-								<img src="../diaryimage/${list.image}">
-							</a>
-						</div>
-					</c:if>
 					<div class="media-body">
 						<a href="detail?no=${list.no}&id=${list.id}">
-							<h4 class="media-heading">${list.title}</h4>
-						</a> Posted by <span class="text-primary">${list.id}</span>&nbsp;&nbsp;작성일
-						${list.regdate}
+							<h3>
+								<strong>${list.title}</strong>
+							</h3>
+
+						</a> <em> Posted by <span class="text-primary">${list.id}</span>&nbsp;&nbsp;작성일
+							${list.regdate}
+						</em>
 					</div>
 				</div>
 				<hr>
 			</c:forEach>
 
 			<!-- 반복문 종료 -->
-
-
-			<!-- Pager -->
-			<!--   <ul class="pager">
-				<li class="next"><a href="#">Older Posts &rarr;</a></li>
-			</ul> -->
-
 		</div>
 	</div>
 
 
+
 	<%@include file="../include/footer.jsp"%>
 </body>
+
 </html>
+

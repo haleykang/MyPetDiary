@@ -58,6 +58,8 @@
 
 		<!-- /diary/list 요청 오면 -->
 		<interceptor>
+			<!-- 모두의 일기 요청 추가 -->
+			<mapping path="/diary/shareboard" />
 			<mapping path="/diary/list" />
 			<mapping path="/diary/detail" />
 			<mapping path="/diary/write" />

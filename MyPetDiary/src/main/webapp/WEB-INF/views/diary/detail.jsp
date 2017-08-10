@@ -71,6 +71,20 @@
 					</c:if>
 				</div>
 				<br />
+				<div class="form-group">
+					<c:if test="${detail.ckshare == 'true' }">
+						<input type="checkbox" name="ckshare" value="true"
+							checked="checked" disabled="disabled">&nbsp;<span
+							class="glyphicon glyphicon-share text-primary"></span>&nbsp;작성한
+							일기를 게시판에 공유합니다.
+					</c:if>
+					<c:if test="${detail.ckshare == 'false' }">
+						<input type="checkbox" name="ckshare" value="true" disabled="disabled"
+							>&nbsp;<span
+							class="glyphicon glyphicon-share text-primary"></span>&nbsp;작성한
+							일기를 게시판에 공유합니다.
+					</c:if>
+				</div>
 
 
 				<div class="box-footer">
@@ -78,9 +92,17 @@
 						<hr>
 						<div class="text-center">
 							<!-- 필요 버튼 선언 -->
-							<button id="list" class="btn btn-primary">목록</button>
-							<button id="update" class="btn btn-warning">수정</button>
-							<button id="delete" class="btn btn-danger">삭제</button>
+							<c:if test="${login.id == detail.id}">
+								<!-- 진입한 위치에 따라 다른 페이지로 이동  -->
+								<button class="btn btn-default" onclick="history.back();">돌아가기</button>
+								<button id="update" class="btn btn-primary">수정</button>
+								<button id="delete" class="btn btn-danger">삭제</button>
+							</c:if>
+							<c:if test="${login.id != detail.id}">
+								<button class="btn btn-default" onclick="history.back();">돌아가기</button>
+							</c:if>
+
+
 						</div>
 					</div>
 				</div>
@@ -90,12 +112,12 @@
 	</div>
 
 	<script>
-		$(function() {
-			$('#list').on('click', function() {
-				location.href = "list";
+		/* 	$(function() {
+				$('#list').on('click', function() {
+					location.href = "list";
+				});
 			});
-		});
-
+		 */
 		// 수정
 		$(function() {
 			$('#update').on('click', function() {

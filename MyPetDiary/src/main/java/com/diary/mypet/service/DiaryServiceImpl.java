@@ -57,7 +57,7 @@ public class DiaryServiceImpl implements DiaryService {
 		String content = request.getParameter("content");
 
 		// 1-2) 체크 박스 추가 된 값 가져오기
-		String[] ckshare= request.getParameterValues("ckshare");
+		String ckshare = request.getParameter("ckshare");
 		System.out.println(ckshare);
 
 		// 2) Dao 메소드에서 사용할 매개변수 생성
@@ -65,6 +65,14 @@ public class DiaryServiceImpl implements DiaryService {
 		vo.setId(id);
 		vo.setTitle(title);
 		vo.setContent(content);
+
+		if (ckshare == null || ckshare.equals("")) {
+
+			vo.setCkshare("false");
+
+		} else {
+			vo.setCkshare(ckshare);
+		}
 
 		// 3) 이미지 파일 가져오기
 		// (1) 폼에서 파일 가져오기
@@ -76,8 +84,9 @@ public class DiaryServiceImpl implements DiaryService {
 		String filename = image.getOriginalFilename();
 		// 인코딩 안되니까 가져온 파일이름의 뒤 3글자 가져와서 파일 이름에 붙이자
 		System.out.println("Original filename : " + filename);
-		String ext = filename.substring(filename.length() - 3, filename.length());
-		System.out.println("확장자 : " + ext);
+
+		// String ext = filename.substring(filename.length() - 3, filename.length());
+		// System.out.println("확장자 : " + ext);
 
 		// System.out.println("filename = " + filename);
 		// String filename = null;
@@ -97,6 +106,9 @@ public class DiaryServiceImpl implements DiaryService {
 			vo.setImage("default_image.jpg");
 
 		} else {
+
+			String ext = filename.substring(filename.length() - 3, filename.length());
+			System.out.println("확장자 : " + ext);
 
 			filename = id + uid + "." + ext;
 			// 저장된 파일 경로 생성
@@ -161,16 +173,24 @@ public class DiaryServiceImpl implements DiaryService {
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 
-		// 1-2) 공유 체크 박스 추가된 값 가져오기
-		String share = request.getParameter("share");
-		System.out.println(share);
+		// 1-2) 체크 박스 추가 된 값 가져오기
+		String ckshare = request.getParameter("ckshare");
+		System.out.println(ckshare);
 
-		// 2) Dao 메소드에서 사용하기 위해 VO 가져와서 값 저장
+		// 2) Dao 메소드에서 사용할 매개변수 생성
 		DiaryVO vo = new DiaryVO();
 		vo.setNo(no);
+		vo.setId(id);
 		vo.setTitle(title);
 		vo.setContent(content);
-		vo.setId(id);
+
+		if (ckshare == null || ckshare.equals("")) {
+
+			vo.setCkshare("false");
+
+		} else {
+			vo.setCkshare(ckshare);
+		}
 
 		// 3) 이미지 파일 가져오기
 		// String test = request.getParameter("iimmgg");
@@ -186,8 +206,7 @@ public class DiaryServiceImpl implements DiaryService {
 
 		String filename = image.getOriginalFilename();
 		System.out.println("Original filename : " + filename);
-		String ext = filename.substring(filename.length() - 3, filename.length());
-		System.out.println("확장자 : " + ext);
+
 		// String filename = image.getOriginalFilename();
 		// System.out.println("오리지널 파일 이름 : " + filename);
 
@@ -198,6 +217,9 @@ public class DiaryServiceImpl implements DiaryService {
 			vo.setImage(iimmgg);
 
 		} else {
+
+			String ext = filename.substring(filename.length() - 3, filename.length());
+			System.out.println("확장자 : " + ext);
 
 			filename = id + uid + "." + ext;
 			// 저장된 파일 경로 생성
@@ -249,6 +271,13 @@ public class DiaryServiceImpl implements DiaryService {
 	public int deleteDiary(DiaryVO vo) {
 
 		return dao.deleteDiary(vo);
+	}
+
+	// 모두의 다이어리
+	@Override
+	public List<DiaryVO> shareAllDiary() {
+
+		return dao.shareAllDiary();
 	}
 
 }

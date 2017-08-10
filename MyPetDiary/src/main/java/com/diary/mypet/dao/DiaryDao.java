@@ -24,4 +24,7 @@ public interface DiaryDao {
 
 	// 5. 일기 삭제(글 번호, 아이디 기준으로 삭제)
 	public int deleteDiary(DiaryVO vo);
+
+	// 6. 모두의 일기장 구현 (ckshare = true인 부분만 출력)
+	public List<DiaryVO> shareAllDiary();
 }

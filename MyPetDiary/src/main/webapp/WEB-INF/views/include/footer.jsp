@@ -16,24 +16,25 @@
 <script src="/mypet/resources/bootstrap/js/bootstrap.min.js"></script>
 
 <body>
-	<br />
-	<br />
-	<br />
-	<br />
-	<hr>
+
 	<footer class="main-footer">
 
+
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-6 col-lg-offset-3 col-md-10 col-md-offset-1">
-					<p>
-						<strong>Copyright &copy; 2017 <a href="/mypet">My Pet
-								Diary</a>.
-						</strong> All rights reserved.
-					</p>
-				</div>
+
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<br /> <br /> <br />
+				<hr>
+				<br />
+				<p>
+					<strong>Copyright &copy; 2017 <a href="/mypet">My Pet
+							Diary</a>.
+					</strong> All rights reserved.
+				</p>
+				<br /> <br /> 
 			</div>
 		</div>
+
 
 	</footer>
 

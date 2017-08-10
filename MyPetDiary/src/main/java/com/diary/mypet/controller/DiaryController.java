@@ -143,4 +143,15 @@ public class DiaryController {
 		return "redirect:result";
 	}
 
+	// 9. 모두의 일기로 이동
+	@RequestMapping(value = "shareboard", method = RequestMethod.GET)
+	public void goShare(Model model) {
+		// 1) 서비스 메소드 실행 후 저장
+		List<DiaryVO> list = service.shareAllDiary();
+		// 2) 모델에 저장
+		model.addAttribute("list", list);
+		// 3) 결과 페이지로 이동
+
+	}
+
 }

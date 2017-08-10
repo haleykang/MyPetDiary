@@ -35,14 +35,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertDiary" parameterType="DiaryVO">
 		insert into
 		diary(no,title,content,image,id, ckshare)
-		values(NOSEQ.NEXTVAL,#{title},#{content},#{image},#{id}, #{ckshare})
+		values(NOSEQ.NEXTVAL,#{title},#{content},#{image},#{id},#{ckshare})
 	</insert>
 
 	<!-- // 4. 일기 수정(제목, 내용, 이미지) 입력 받아서 테이블에 저장 -->
 	<!-- public int updateDiary(DiaryVO vo); -->
 	<update id="updateDiary" parameterType="DiaryVO">
 		update diary set
-		title=#{title},content=#{content},image=#{image}, chshare=#{ckshare}
+		title=#{title},content=#{content},image=#{image}, ckshare=#{ckshare}
 		where id=#{id} and
 		no=#{no}
 	</update>
@@ -55,5 +55,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where
 		id=#{id} and no=#{no}
 	</delete>
+
+	<!-- 6. 모두의 다이어리 -->
+	<!-- public List<DiaryVO> shareAllDiary(); -->
+	<select id="shareAllDiary" resultType="DiaryVO">
+		select * from diary
+		where ckshare='true'
+		order by no desc
+	</select>
 
 </mapper>
