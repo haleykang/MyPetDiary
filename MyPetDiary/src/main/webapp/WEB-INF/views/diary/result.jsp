@@ -29,7 +29,7 @@
 
 				<div>
 					<div class="box-footer">
-						<a href="list" type="button" class="btn btn-primary">목록으로</a>
+						<a href="list" type="button" class="btn btn-primary">내 일기장으로</a>
 
 					</div>
 				</div>

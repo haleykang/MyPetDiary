@@ -7,11 +7,21 @@ import java.net.URLEncoder;
 
 public class DUserVO {
 
-	// 1. 변수 선
+	// 1. 변수 선언
 	private String id;
 	private String pw;
 	private String profile;
 	private String nickname;
+
+	public DUserVO() {
+
+	}
+
+	public DUserVO(String id, String pw) {
+		super();
+		this.id = id;
+		this.pw = pw;
+	}
 
 	// 2. get set
 	public String getId() {
