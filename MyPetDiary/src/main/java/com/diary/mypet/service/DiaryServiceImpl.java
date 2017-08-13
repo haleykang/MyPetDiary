@@ -103,7 +103,7 @@ public class DiaryServiceImpl implements DiaryService {
 
 		if (filename == null || filename.equals("")) {
 			// 사용자가 선택한 파일이 없을 경우 null로 표시 또는 디폴트 이미지 등록
-			vo.setImage("default_image.jpg");
+			vo.setImage("default_image.png");
 
 		} else {
 

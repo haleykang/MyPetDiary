@@ -59,7 +59,8 @@
 					reader.readAsDataURL(input.files[0]);
 				} */
 
-				if (ext.toLowerCase() == 'jpg' || ext.toLowerCase() == 'gif'
+				
+		if (ext.toLowerCase() == 'jpg' || ext.toLowerCase() == 'gif'
 						|| ext.toLowerCase() == 'png') {
 
 					if (filesize < 10485760) {

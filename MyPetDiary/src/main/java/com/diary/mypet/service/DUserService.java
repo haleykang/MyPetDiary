@@ -1,5 +1,7 @@
 package com.diary.mypet.service;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.diary.mypet.domain.DUserVO;
 
 public interface DUserService {
@@ -12,5 +14,14 @@ public interface DUserService {
 
 	// 3. 회원 가입
 	public int join(DUserVO vo);
+
+	// 4. 프로필 조회
+	public DUserVO selectProfile(String id);
+
+	// 5. 프로필 변경
+	public int updateProfile(MultipartHttpServletRequest request);
+
+	// 6. 회원 탈퇴
+	public int deleteUser(String id);
 
 }

@@ -18,7 +18,7 @@
 		<!-- 경고 창 -->
 		<c:if test="${loginmsg != null}">
 
-			<div class="alert alert-default alert-dismissible" role="alert">
+			<div class="alert alert-warning alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -31,7 +31,7 @@
 
 		<c:if test="${msg != null}">
 
-			<div class="alert alert-default alert-dismissible" role="alert">
+			<div class="alert alert-success alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>

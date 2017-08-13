@@ -37,6 +37,23 @@ public class JSONController {
 		return map;
 	}
 
+	// 2. 프로필 조회 - ajax로 처리
+	@RequestMapping(value = "user/profile", method = RequestMethod.GET)
+	public Map<String, Object> profile(@RequestParam("id") String id) {
+
+		// 1) DUserVO에 서비스 함수 실행
+		DUserVO profile = userService.selectProfile(id);
+
+		// 2) 저장한 값을 맵에 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("profile", profile);
+
+		// 3) 맵을 리턴
+		// {"profile":{"id":"kjj8032","pw":"1234","profile":null,"nickname":"강남이언니","intro":null}}
+		return map;
+
+	}
+
 	/// 모바일 기능 구현
 	// 1. 모바일 로그인 - 모바일에서 입력받은 아이디 & 비밀번호가 일치하면 정보를 아니면 null 리턴
 	@RequestMapping("androidlogin")
@@ -57,7 +74,7 @@ public class JSONController {
 
 		// 리턴 값 미리 확인
 		// 1. 정상 로그인 - http://localhost:8080/mypet/androidlogin?id=kjj8032&pw=1234
-		// {"login":{"id":"kjj8032","pw":"1234","profile":null,"nickname":"강남이언니"}}
+		// {"login":{"id":"kjj8032","pw":"1234","profile":null,"nickname":"강남이언니", "intro" : "소"}}
 		// 2. 로그인 실패 - http://localhost:8080/mypet/androidlogin?id=kjj8032&pw=12345
 		// {"login":null}
 		// 아이피 : 192.168.25.46

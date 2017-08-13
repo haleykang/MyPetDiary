@@ -26,8 +26,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- public int join(DUserVO vo) -->
 	<insert id="join" parameterType="DUserVO">
 		insert into
-		duser(id,pw,nickname)
-		values(#{id},#{pw}, #{nickname})
+		duser(id,pw,profile,
+		nickname)
+		values(#{id},#{pw},'default_profile_dog.png' ,#{nickname})
 	</insert>
+
+	<!-- 4. 회원 조회 -->
+	<!-- public DUserVO selectProfile (String id); -->
+	<select id="selectProfile" resultType="DUserVO" parameterType="String">
+
+		select * from duser
+		where id = #{id}
+
+	</select>
+
+	<!-- 5. 프로필 수정 -->
+	<!-- public int updateProfile(DUserVO vo); -->
+	<update id="updateProfile" parameterType="DUserVO">
+
+		update duser
+		set
+		profile=#{profile}, nickname=#{nickname}, intro=#{intro}
+		where id=#{id}
+	</update>
+
+	<!-- 회원 탈퇴 -->
+	<!-- public int deleteUser(String id); -->
+	<delete id="deleteUser" parameterType="String">
+		delete from duser
+		where id
+		= #{id}
+	</delete>
 
 </mapper>

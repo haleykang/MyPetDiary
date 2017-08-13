@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.diary.mypet.domain.DUserVO;
@@ -87,12 +89,32 @@ public class DUserController {
 
 	}
 
-	// 6. 프로필 화면으로 이동하는 메소드
-	@RequestMapping(value = "profile", method = RequestMethod.GET)
-	public void goProfile() {
+	// 6. 프로필 수정
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String updateProfile(MultipartHttpServletRequest request) {
+
+		// 1) 서비스 메소드 호출
+		service.updateProfile(request);
+
+		// 2) list 페이지로 리다이렉트
+		return "redirect:/diary/list";
+	}
+
+	// 7. 회원 탈퇴
+	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
+	public String deleteUser(@RequestParam("id") String id, HttpSession session, RedirectAttributes attr) {
+		// 1) 회원 탈퇴
+		service.deleteUser(id);
+
+		// 2) 세션 초기화
+		session.invalidate();
+
+		// 3) 리다이렉트 메세지
+		attr.addFlashAttribute("msg", "정상적으로 회원 탈퇴 되셨습니다.");
+
+		// 4) 메인화면으로 리다이렉트
+		return "redirect:/";
 
 	}
-	
-	
 
 }

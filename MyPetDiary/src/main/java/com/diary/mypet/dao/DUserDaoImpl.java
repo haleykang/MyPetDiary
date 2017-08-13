@@ -33,4 +33,25 @@ public class DUserDaoImpl implements DUserDao {
 		return sqlSession.insert("duser.join", vo);
 	}
 
+	// 4. 회원 조회 -> 프로필 조회
+	@Override
+	public DUserVO selectProfile(String id) {
+
+		return sqlSession.selectOne("duser.selectProfile", id);
+	}
+
+	// 5. 프로필 변경
+	@Override
+	public int updateProfile(DUserVO vo) {
+
+		return sqlSession.update("duser.updateProfile", vo);
+	}
+
+	// 6. 회원 탈퇴 
+	@Override
+	public int deleteUser(String id) {
+		
+		return sqlSession.delete("duser.deleteUser", id);
+	}
+
 }

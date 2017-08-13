@@ -1,8 +1,5 @@
 package com.diary.mypet.domain;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 // DUser 테이블 데이터 저
 
 public class DUserVO {
@@ -12,6 +9,8 @@ public class DUserVO {
 	private String pw;
 	private String profile;
 	private String nickname;
+	// 소개 변수 추가
+	private String intro;
 
 	public DUserVO() {
 
@@ -57,10 +56,19 @@ public class DUserVO {
 		this.nickname = nickname;
 	}
 
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
 	// 3. toString()
 	@Override
 	public String toString() {
-		return "DUserVO [id=" + id + ", pw=" + pw + ", profile=" + profile + ", nickname=" + nickname + "]";
+		return "DUserVO [id=" + id + ", pw=" + pw + ", profile=" + profile + ", nickname=" + nickname + ", intro="
+				+ intro + "]";
 	}
 
 }

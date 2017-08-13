@@ -60,7 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- public List<DiaryVO> shareAllDiary(); -->
 	<select id="shareAllDiary" resultType="DiaryVO">
 		select * from diary
-		where ckshare='true'
+		where
+		ckshare='true'
 		order by no desc
 	</select>
 

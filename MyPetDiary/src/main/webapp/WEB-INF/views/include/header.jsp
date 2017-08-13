@@ -80,8 +80,7 @@
 								<li role="presentation" class="dropdown-header">나만의 공간</li>
 								<li><a href="/mypet/diary/list"><span
 										class="glyphicon glyphicon-book text-success"></span>&nbsp;일기장</a></li>
-								<li><a href="/mypet/user/profile"><span
-										class="glyphicon glyphicon-user text-info"></span>&nbsp;프로필</a></li>
+
 
 							</c:if>
 
